@@ -1,12 +1,10 @@
-import { root } from 'postcss';
 import { Button, createTheme } from '@mantine/core';
-import { useColorScheme } from '@mantine/hooks';
 
 export const theme = createTheme({
   /** Put your mantine theme override here */
   fontFamily: 'Open Sans',
   fontSizes: { md: '12px' },
-  radius: { sm: '232px' },
+  radius: { sm: '10px' },
   colors: {
     blue: [
       '#e64980',

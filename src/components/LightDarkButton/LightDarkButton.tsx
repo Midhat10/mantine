@@ -2,17 +2,12 @@ import React from 'react';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import cx from 'clsx';
 import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
-import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+import { useHotkeys } from '@mantine/hooks';
 import classes from './LightDarkButton.module.css';
 
 function LightDarkButton() {
   const { setColorScheme, colorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
-
-  //   const [value, setValue] = useLocalStorage({
-  //     key: 'color-scheme',
-  //     defaultValue: 'dark',
-  //   });
 
   const toggleColorScheme = () => setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
 
