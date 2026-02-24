@@ -12,9 +12,9 @@ export function HomePage() {
     <>
       <AppShellExample />
       <Flex direction="column" align="center" gap="lg">
-        <Cards />
-        <LightDarkButton />
-        <Buttons />
+        {/* <Cards /> */}
+
+        {/* <Buttons /> */}
       </Flex>
     </>
   );
