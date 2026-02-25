@@ -20,13 +20,13 @@ export const theme = createTheme({
     ],
   },
   primaryColor: 'red',
-  components: {
-    Button: Button.extend({
-      styles: (theme) => ({
-        root: {
-          backgroundColor: theme.colors.blue[1],
-        },
-      }),
-    }),
-  },
+  // components: {
+  //   Button: Button.extend({
+  //     styles: (theme) => ({
+  //       root: {
+  //         backgroundColor: theme.colors.blue[2],
+  //       },
+  //     }),
+  //   }),
+  // },
 });
