@@ -19,7 +19,7 @@ export const theme = createTheme({
       '#a9e34b',
     ],
   },
-  primaryColor: 'red',
+  primaryColor: 'gray',
   // components: {
   //   Button: Button.extend({
   //     styles: (theme) => ({

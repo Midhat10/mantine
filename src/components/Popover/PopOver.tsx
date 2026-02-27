@@ -4,10 +4,11 @@ import GridSmall from '../Cards/GridSmall';
 function PopOverExample({ children, list }) {
   console.log(list, 'list');
   return (
-    <Popover offset={24} width={444} trapFocus position="bottom" withArrow shadow="md">
+    <Popover offset={24} trapFocus position="bottom" withArrow shadow="md">
       <Popover.Target>{children}</Popover.Target>
-      <Popover.Dropdown>
+      <Popover.Dropdown p={0}>
         <GridSmall data={list} />
+        {!list && <div>empty</div>}
       </Popover.Dropdown>
     </Popover>
   );

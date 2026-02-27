@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react';
-import { AppShell, Burger, Button, Flex, Grid, Loader, Popover, Text, Title } from '@mantine/core';
+import {
+  AppShell,
+  Burger,
+  Button,
+  Flex,
+  Grid,
+  Group,
+  Loader,
+  Popover,
+  Text,
+  Title,
+} from '@mantine/core';
 import { useDisclosure, useFetch } from '@mantine/hooks';
 import GridExample from '../Cards/Grid';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
@@ -19,27 +30,12 @@ function AppShellExample() {
   const { data, error } = useFetch<Item[]>(
     'https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json'
   );
-  useEffect(() => {
-    if (data) {
-      setList(data.slice(0, 3));
-    }
-    console.log(list);
-  }, [data]);
+
   return (
     <>
-      <AppShell
-        padding={{ base: 10, sm: 15, lg: 'xl' }}
-        header={{ height: 60 }}
-        // navbar={{
-        //   width: 300,
-        //   breakpoint: 'sm',
-        //   collapsed: { mobile: !opened },
-        // }}
-      >
+      <AppShell padding={{ base: 10, sm: 15, lg: 'xl' }} header={{ height: 60 }}>
         <AppShell.Header p="7.5px 20px">
           <Flex align="center" gap="md" p="0">
-            {/* <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" /> */}
-
             <Text fw="600" fz="22px">
               Vegetable
             </Text>
@@ -73,27 +69,10 @@ function AppShellExample() {
           </Flex>
         </AppShell.Header>
 
-        {/* <AppShell.Navbar>
-          <AppShell.Section style={{ textAlign: 'center' }}>
-            <Text>Hello this is title</Text>
-          </AppShell.Section>
-
-          <AppShell.Section grow mt="lg" style={{ textAlign: 'center' }}>
-            <Text>example 1</Text>
-            <Text>example 2</Text>
-            <Text>example 3</Text>
-            <Text>example 4</Text>
-          </AppShell.Section>
-
-          <AppShell.Section>
-            <Text>Footer</Text>
-          </AppShell.Section>
-        </AppShell.Navbar> */}
-
         <AppShell.Main bg="#f3f5fa">
           <Title>Catalog</Title>
 
-          <GridExample data={data} />
+          <GridExample data={data} error={error} obj={[list, setList]} />
         </AppShell.Main>
       </AppShell>
     </>

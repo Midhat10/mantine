@@ -1,16 +1,59 @@
-import { Button, Card, Grid, Group, Image, Text } from '@mantine/core';
+import { Button, Card, Center, Grid, Group, Image, Loader, Text } from '@mantine/core';
 import Counter from '../Counter';
 
-function GridExample({ data }) {
+function GridExample({ data, obj }) {
+  console.log(obj);
+  console.log(data);
+  const listEmpty = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+
   return (
     <div>
       <Grid justify="space-around" mt="lg">
+        {data === null &&
+          listEmpty.map((item1) => (
+            <>
+              <div>{item1}</div>
+              <Grid.Col style={{ maxWidth: 350 }} span={{ base: 12, sm: 3, xs: 3 }}>
+                <Card shadow="sm" padding="lg" radius="md" withBorder h={380}>
+                  <Center w={276} h={276} bg="#dee2e6" bdrs={8}>
+                    <Loader type="bars" size="xs" />
+                  </Center>
+                </Card>
+              </Grid.Col>
+            </>
+          ))}
+
         {data &&
           data.map((item1) => (
-            <Grid.Col style={{ maxWidth: 350 }} span={{ base: 12, sm: 3, xs: 3 }}>
+            <Grid.Col key={item1.id} style={{ maxWidth: 350 }} span={{ base: 12, sm: 3, xs: 3 }}>
               <Card shadow="sm" padding="lg" radius="md" withBorder>
                 <Group>
-                  <Image src={item1.image} mah={276} maw={276} alt="Norway" />
+                  <Image src={item1.image} mah={276} maw={276} />
                   <Group justify="space-between" mt="md" mb="xs">
                     <Group>
                       <Text fw={600} fz="18px" lh="155%">
@@ -29,6 +72,7 @@ function GridExample({ data }) {
                     $ {item1.price}
                   </Text>
                   <Button
+                    // onClick={() => obj[1]({...item1,})}
                     color="#3b944e"
                     variant="light"
                     mt="md"
