@@ -1,10 +1,9 @@
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Button } from '@mantine/core';
-import { useCounter } from '@mantine/hooks';
+import { useHover } from '@mantine/hooks';
 
-function Counter() {
-  const [value, { increment, decrement }] = useCounter(1, { min: 1 });
-
+function Counter({ value, decrement, increment }) {
+  const { hovered, ref } = useHover();
   return (
     <Button.Group>
       <Button variant="default" radius="md" onClick={decrement} bg="#dee2e6" maw={30} p={9}>

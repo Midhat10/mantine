@@ -1,14 +1,12 @@
 import { Button, Popover, TextInput } from '@mantine/core';
 import GridSmall from '../Cards/GridSmall';
 
-function PopOverExample({ children, list }) {
-  console.log(list, 'list');
+function PopOverExample({ children }) {
   return (
     <Popover offset={24} trapFocus position="bottom" withArrow shadow="md">
-      <Popover.Target>{children}</Popover.Target>
+      {children}
       <Popover.Dropdown p={0}>
-        <GridSmall data={list} />
-        {!list && <div>empty</div>}
+        <GridSmall />
       </Popover.Dropdown>
     </Popover>
   );
