@@ -3,8 +3,20 @@ import { Button, Card, Group, Image, Text } from '@mantine/core';
 import Counter from '../Counter/Counter';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
-function CardBig({ item, index }) {
+// Определяем интерфейс для пропсов CardBig
+export interface CardBigProps {
+  item: {
+    id: string;
+    image: string;
+    name: string;
+    price: number;
+  };
+  index: number;
+}
+
+function CardBig({ item, index }: CardBigProps) {
   const { counters, increment, decrement, updateList } = useCounterContext();
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Group>
@@ -32,7 +44,6 @@ function CardBig({ item, index }) {
         </Text>
         <Button
           variant="filled"
-          // variant="light"
           onClick={() => {
             updateList(item);
           }}

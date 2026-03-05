@@ -1,39 +1,65 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 
-const CounterContext = createContext('');
+interface ListItem {
+  id: string; // или number, в зависимости от типа id
+  image: string;
+  name: string;
+  price: number;
+}
 
+export interface CounterContextType {
+  counters: number[];
+  increment: (index: number) => void;
+  decrement: (index: number) => void;
+  list: ListItem[]; // или GridExampleProps, если это необходимо
+  updateList: (newItem: ListItem) => void;
+}
+
+// Создаем контекст с типом
+const CounterContext = createContext<CounterContextType | undefined>(undefined);
+
+// Хук для использования контекста
 export const useCounterContext = () => {
-  return useContext(CounterContext);
+  const context = useContext(CounterContext);
+  if (!context) {
+    throw new Error('useCounterContext must be used within a CounterProvider');
+  }
+  return context;
 };
 
-export const CounterProvider = ({ children, initialCounters }) => {
-  const [counters, setCounters] = useState(initialCounters || []);
-  const [list, setList] = useState([]); // Добавляем состояние list
+// Определяем интерфейс для пропсов CounterProvider
+interface CounterProviderProps {
+  children: ReactNode;
+  initialCounters?: number[];
+}
+
+export const CounterProvider: React.FC<CounterProviderProps> = ({ children, initialCounters }) => {
+  const [counters, setCounters] = useState<number[]>(initialCounters || []);
+  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
-    if (initialCounters.length > 0) {
-      setCounters(initialCounters); // Устанавливаем начальные значения
+    if (initialCounters && initialCounters.length > 0) {
+      setCounters(initialCounters);
     }
   }, [initialCounters]);
 
-  // Пример функции для обновления list
-  const updateList = (newItem) => {
+  const updateList = (newItem: any) => {
     setList((prevList) => [...prevList, newItem]);
   };
 
-  const increment = (index) => {
+  const increment = (index: number) => {
     setCounters((prev) => {
       const newCounters = [...prev];
-      newCounters[index] = (newCounters[index] || 1) + 1; // Увеличиваем значение
+      newCounters[index] = (newCounters[index] || 1) + 1;
       return newCounters;
     });
   };
 
-  const decrement = (index) => {
+  const decrement = (index: number) => {
     setCounters((prev) => {
       const newCounters = [...prev];
       if (newCounters[index] > 1) {
-        newCounters[index] -= 1; // Уменьшаем значение, если оно больше 1
+        newCounters[index] -= 1;
       }
       return newCounters;
     });

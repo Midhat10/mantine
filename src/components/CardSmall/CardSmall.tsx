@@ -1,9 +1,9 @@
-import React from 'react';
 import { Card, Group, Image, Stack, Text } from '@mantine/core';
+import { CardBigProps } from '../CardBig/CardBig';
 import Counter from '../Counter/Counter';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
-function CardSmall({ item, index }) {
+function CardSmall({ item, index }: CardBigProps) {
   const { counters, increment, decrement } = useCounterContext();
   return (
     <Card shadow="sm" padding="24" radius="md">

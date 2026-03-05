@@ -1,5 +1,5 @@
 import { Button, Popover, TextInput } from '@mantine/core';
-import GridSmall from '../Cards/GridSmall';
+import GridSmall from '../GridSmall/GridSmall';
 
 function PopOverExample({ children }) {
   return (
