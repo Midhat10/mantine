@@ -3,7 +3,7 @@ import { IconMoon, IconSun } from '@tabler/icons-react';
 import cx from 'clsx';
 import { ActionIcon, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import classes from './LightDarkButton.module.css';
+import styles from './LightDarkButton.module.css';
 
 function LightDarkButton() {
   const { setColorScheme, colorScheme } = useMantineColorScheme();
@@ -20,8 +20,8 @@ function LightDarkButton() {
         size="xl"
         aria-label="Toggle color scheme"
       >
-        <IconSun className={cx(classes.icon, classes.light)} stroke={1.5} />
-        <IconMoon className={cx(classes.icon, classes.dark)} stroke={1.5} />
+        <IconSun className={cx(styles.icon, styles.light)} stroke={1.5} />
+        <IconMoon className={cx(styles.icon, styles.dark)} stroke={1.5} />
       </ActionIcon>
     </div>
   );

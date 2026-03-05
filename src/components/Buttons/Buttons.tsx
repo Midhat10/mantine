@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { IconMoon, IconSun } from '@tabler/icons-react';
+import { IconSun } from '@tabler/icons-react';
 import { Button } from '@mantine/core';
-import { useDisclosure, useHover } from '@mantine/hooks';
-
-// import { theme } from '../../theme';
 
 function Buttons() {
   const [isHovered, setIsHovered] = useState(false);
