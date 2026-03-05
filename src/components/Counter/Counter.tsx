@@ -1,10 +1,17 @@
-import { useState } from 'react';
 import { Button } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
 
-function Counter({ value, decrement, increment }) {
+// Определяем интерфейс для пропсов Counter
+interface CounterProps {
+  value: number; // Значение счетчика
+  decrement: () => void; // Функция для уменьшения значения
+  increment: () => void; // Функция для увеличения значения
+}
+
+function Counter({ value, decrement, increment }: CounterProps) {
   const { hovered: hovered1, ref: ref1 } = useHover();
   const { hovered: hovered2, ref: ref2 } = useHover();
+
   return (
     <Button.Group>
       <Button

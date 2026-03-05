@@ -1,4 +1,17 @@
-const TotalPrice = ({ list, counters }) => {
+import React from 'react';
+
+// Определяем интерфейс для элемента списка
+interface ListItem {
+  price: number; // Предполагаем, что цена всегда число
+}
+
+// Определяем интерфейс для пропсов TotalPrice
+interface TotalPriceProps {
+  list: ListItem[]; // Массив элементов списка
+  counters: number[]; // Массив счетчиков
+}
+
+const TotalPrice: React.FC<TotalPriceProps> = ({ list, counters }) => {
   const totalPrice = () => {
     // Используем длину массива list
     const prices = list.map((item, index) => {

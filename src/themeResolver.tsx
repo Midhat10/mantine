@@ -1,8 +1,6 @@
 import {
-  darken,
   defaultVariantColorsResolver,
   parseThemeColor,
-  rgba,
   VariantColorsResolver,
 } from '@mantine/core';
 
@@ -19,6 +17,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
       ...defaultResolvedColors,
       color: 'var(--mantine-color-black)',
       hoverColor: 'var(--mantine-color-black)',
+      border: 'none', // Добавлено свойство border
     };
   }
 
@@ -28,6 +27,7 @@ const variantColorResolver: VariantColorsResolver = (input) => {
       background: '#d6f0dc',
       hover: '#e7faeb',
       color: '#3b944e',
+      border: 'none', // Добавлено свойство border
     };
   }
 
@@ -37,11 +37,14 @@ const variantColorResolver: VariantColorsResolver = (input) => {
       background: 'var(--mantine-color-red-9)',
       hover: 'var(--mantine-color-red-8)',
       color: 'var(--mantine-color-white)',
-      border: 'none',
+      border: 'none', // Здесь border тоже добавлено
     };
   }
 
-  return defaultResolvedColors;
+  return {
+    ...defaultResolvedColors,
+    border: 'none', // Добавлено свойство border для случая по умолчанию
+  };
 };
 
 export default variantColorResolver;

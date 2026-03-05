@@ -4,21 +4,17 @@
 }
 
 .dark {
-  @mixin dark {
-    display: none;
-  }
-
-  @mixin light {
-    display: block;
-  }
+  display: none; /* Скрыть элемент в темной теме */
 }
 
 .light {
-  @mixin light {
-    display: none;
-  }
+  display: block; /* Показать элемент в светлой теме */
+}
 
-  @mixin dark {
-    display: block;
-  }
+.light .dark {
+  display: none; /* Скрыть элемент в светлой теме */
+}
+
+.dark .light {
+  display: block; /* Показать элемент в темной теме */
 }

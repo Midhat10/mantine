@@ -1,7 +1,12 @@
-import { Button, Popover, TextInput } from '@mantine/core';
+import { Popover } from '@mantine/core';
 import GridSmall from '../GridSmall/GridSmall';
 
-function PopOverExample({ children }) {
+// Определяем интерфейс для пропсов PopOverExample
+interface PopOverExampleProps {
+  children: React.ReactNode; // Тип для children
+}
+
+function PopOverExample({ children }: PopOverExampleProps) {
   return (
     <Popover offset={24} trapFocus position="bottom" withArrow shadow="md">
       {children}

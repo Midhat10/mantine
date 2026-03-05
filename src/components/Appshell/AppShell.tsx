@@ -7,7 +7,7 @@ import LightDarkButton from '../LightDarkButton/LightDarkButton';
 import PopOverExample from '../Popover/PopOver';
 
 interface Item {
-  id: number;
+  id: string;
   name: string;
   price: number;
   image: string;
@@ -15,7 +15,7 @@ interface Item {
 }
 
 function AppShellExample() {
-  const { data, error } = useFetch<Item[]>(
+  const { data } = useFetch<Item[]>(
     'https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json'
   );
   const initialCounters = data ? data.map(() => 1) : [];
@@ -41,7 +41,7 @@ function AppShellExample() {
           <AppShell.Main bg="#f3f5fa">
             <Title>Catalog</Title>
 
-            <GridExample data={data} error={error} />
+            <GridExample data={data} length={0} />
           </AppShell.Main>
         </AppShell>
       </CounterProvider>
