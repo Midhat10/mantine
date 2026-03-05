@@ -1,8 +1,8 @@
 import { Card, Grid, Group, Image, Stack, Text } from '@mantine/core';
 import Empty from '@/assets/svg/empty';
-import CardSmall from '../CardSmall';
-import { useCounterContext } from '../CounterContext';
-import TotalPrice from '../TotalPrice';
+import CardSmall from '../CardSmall/CardSmall';
+import { useCounterContext } from '../CounterContext/CounterContext';
+import TotalPrice from '../TotalPrice/TotalPrice';
 
 function GridSmall() {
   const { list, counters } = useCounterContext();

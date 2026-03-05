@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Group, Image, Text } from '@mantine/core';
-import Counter from './Counter';
-import { useCounterContext } from './CounterContext';
+import Counter from '../Counter/Counter';
+import { useCounterContext } from '../CounterContext/CounterContext';
 
 function CardBig({ item, index }) {
   const { counters, increment, decrement, updateList } = useCounterContext();

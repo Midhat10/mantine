@@ -1,6 +1,6 @@
 import { Button, Card, Center, Grid, Group, Image, Loader, Text } from '@mantine/core';
-import CardBig from '../CardBig';
-import Counter from '../Counter';
+import CardBig from '../CardBig/CardBig';
+import Counter from '../Counter/Counter';
 
 function GridExample({ data, error }) {
   console.log(data);

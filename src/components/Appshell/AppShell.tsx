@@ -3,7 +3,7 @@ import { AppShell, Button, Flex, Text, Title } from '@mantine/core';
 import { useFetch } from '@mantine/hooks';
 import Button2 from '../Button/Button2';
 import GridExample from '../Cards/Grid';
-import { CounterProvider } from '../CounterContext';
+import { CounterProvider } from '../CounterContext/CounterContext';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
 import PopOverExample from '../Popover/PopOver';
 

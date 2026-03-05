@@ -1,5 +1,5 @@
 import { Badge, Button, Popover } from '@mantine/core';
-import { useCounterContext } from '../CounterContext';
+import { useCounterContext } from '../CounterContext/CounterContext';
 
 function Button2() {
   const { list } = useCounterContext();
