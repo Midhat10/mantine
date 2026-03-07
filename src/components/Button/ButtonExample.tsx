@@ -1,7 +1,7 @@
 import { Badge, Button, Popover } from '@mantine/core';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
-function Button2() {
+function ButtonExample() {
   const { list } = useCounterContext();
   return (
     <Popover.Target>
@@ -35,4 +35,4 @@ function Button2() {
   );
 }
 
-export default Button2;
+export default ButtonExample;

@@ -1,6 +1,6 @@
 import { AppShell, Button, Flex, Text, Title } from '@mantine/core';
 import { useFetch } from '@mantine/hooks';
-import Button2 from '../Button/Button2';
+import ButtonExample from '../Button/ButtonExample';
 import { CounterProvider } from '../CounterContext/CounterContext';
 import GridExample from '../Grid/Grid';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
@@ -33,7 +33,7 @@ function AppShellExample() {
               </Button>
               <LightDarkButton />
               <PopOverExample>
-                <Button2 />
+                <ButtonExample />
               </PopOverExample>
             </Flex>
           </AppShell.Header>
