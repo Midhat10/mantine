@@ -43,7 +43,7 @@ export const CounterProvider: React.FC<CounterProviderProps> = ({ children, init
     }
   }, [initialCounters]);
 
-  const updateList = (newItem: any) => {
+  const updateList = (newItem: ListItem) => {
     setList((prevList) => [...prevList, newItem]);
   };
 

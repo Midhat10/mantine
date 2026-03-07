@@ -20,7 +20,7 @@ function CardBig({ item, index }: CardBigProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Group>
-        <Image src={item.image} mah={276} maw={276} />
+        <Image src={item.image} alt={item.name} mah={276} maw={276} />
         <Group justify="space-between" mt="md" mb="xs">
           <Group>
             <Text fw={600} fz="18px" lh="155%">

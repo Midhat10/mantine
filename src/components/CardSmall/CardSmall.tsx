@@ -9,7 +9,7 @@ function CardSmall({ item, index }: CardBigProps) {
     <Card shadow="sm" padding="24" radius="md">
       <Group justify="space-between" gap={0}>
         <Group gap={12}>
-          <Image src={item.image} mah={64} maw={64} alt="Norway" />
+          <Image src={item.image} alt={item.name} mah={64} maw={64} />
           <Stack align="flex-start" justify="center" gap="xs">
             <Group gap={12}>
               <Text fw={600} fz="18px" lh="155%">
