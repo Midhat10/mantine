@@ -1,82 +1,96 @@
 import React from 'react';
+import { IconShoppingCart } from '@tabler/icons-react';
 import { Button, Card, Group, Image, Stack, Text } from '@mantine/core';
 import Counter from '../Counter/Counter';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
+// 1. Описываем интерфейс данных товара
+export interface Item {
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+}
+
+// 2. Типизируем пропсы компонента
 export interface CardBigProps {
-  item: {
-    id: string;
-    image: string;
-    name: string;
-    price: number;
-  };
-  // index больше не нужен для логики счетчика, если мы используем id
+  item: Item;
 }
 
 function CardBig({ item }: CardBigProps) {
+  // Достаем методы из контекста (они уже типизированы в CounterContext)
   const { counters, increment, decrement, updateList } = useCounterContext();
 
-  // Достаем значение по ID. Если в стейте еще нет этого товара — показываем 1.
-  const count = counters[item.id] ?? 1;
+  // Получаем текущее число из объекта counters по string ID
+  const count: number = counters[item.id] ?? 1;
 
-  // Разделяем имя один раз для чистоты кода
-  const [mainName, subName] = item.name.split('-');
+  // Безопасно разбиваем имя
+  const nameParts = item.name.split('-');
+  const firstName = nameParts[0]?.trim();
+  const lastName = nameParts[1]?.trim();
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder style={{ maxWidth: 350 }}>
-      <Group wrap="nowrap" align="flex-start">
-        <Image src={item.image} alt={item.name} mah={120} maw={120} fit="contain" />
+    <Card
+      shadow="sm"
+      padding="md" // Фиксирует 16px со всех сторон
+      radius="md"
+      withBorder
+      w={{ base: '100%', md: 302 }}
+      h={{ base: 'auto', md: 414 }}
+      // Убеждаемся, что карточка правильно распределяет пространство
+      style={{ display: 'flex', flexDirection: 'column' }}
+    >
+      <Card.Section p="md" style={{ display: 'flex', justifyContent: 'center' }}>
+        <Image
+          src={item.image}
+          alt={item.name}
+          // 270px + 16px + 16px = 302px (идеально в размер карточки)
+          w={{ base: '100%', xs: 270 }}
+          h={{ base: 200, xs: 270 }}
+          fit="contain"
+        />
+      </Card.Section>
 
-        <Stack gap="xs" style={{ flex: 1 }}>
-          <Stack gap={0}>
-            <Text fw={600} fz="18px" lh="1.2">
-              {mainName}
-            </Text>
-            {subName && (
-              <Text fw={600} fz="14px" c="dimmed">
-                {subName}
-              </Text>
-            )}
-          </Stack>
-
-          {/* Передаем count и вызываем функции по item.id */}
-          <Counter
-            value={count}
-            decrement={() => decrement(item.id)}
-            increment={() => increment(item.id)}
-          />
+      {/* Контент: Названия и Счетчик */}
+      <Group justify="space-between" align="flex-start" mt="md" wrap="nowrap">
+        <Stack gap={0} style={{ overflow: 'hidden' }}>
+          <Text fw={600} fz="18px" lh="1.2" truncate="end">
+            {item.name.split('-')[0]}
+          </Text>
+          <Text fw={600} fz="14px" c="dimmed" truncate="end">
+            {item.name.split('-')[1]}
+          </Text>
         </Stack>
+
+        <Counter
+          value={count}
+          decrement={() => decrement(item.id)}
+          increment={() => increment(item.id)}
+        />
       </Group>
 
-      <Group justify="space-between" align="center" mt="md">
-        <Text fw={700} fz="20px">
+      {/* Футер: Цена и Кнопка */}
+      {/* mt="auto" толкает группу вниз, а padding="md" у Card создаст нужные 16px снизу */}
+      <Group justify="space-between" align="center" mt="auto" wrap="nowrap">
+        <Text fw={700} fz="22px" style={{ whiteSpace: 'nowrap' }}>
           $ {item.price}
         </Text>
+
         <Button
-          variant="filled"
+          variant="light"
           color="green"
-          onClick={() => {
-            // Передаем товар вместе с актуальным количеством
-            updateList(item, count);
-          }}
+          onClick={() => updateList(item, count)}
           radius="md"
-          rightSection={
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1 1H4L6.68 14.39C6.77144 14.8504 7.02191 15.264 7.38755 15.5583C7.75318 15.8526 8.2107 16.009 8.68 16H15.4C15.8693 16.009 16.3268 15.8526 16.6924 15.5583C17.0581 15.264 17.3086 14.8504 17.4 14.39L18.7 7.5H5.23"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          }
+          // Адаптивные размеры кнопки:
+          // На десктопе (md+) строго 204x44
+          // На мобильных (base) подстраивается под текст
+          w={{ base: 'auto', md: 204 }}
+          h={{ base: 36, md: 44 }}
+          rightSection={<IconShoppingCart size={18} />}
+          styles={{
+            root: { padding: '0 10px' }, // Чтобы иконка и текст не прилипали к краям
+            label: { fontSize: '16px', fontWeight: 600 },
+          }}
         >
           Add to cart
         </Button>

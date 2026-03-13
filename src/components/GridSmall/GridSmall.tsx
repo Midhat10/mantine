@@ -7,15 +7,15 @@ import TotalPrice from '../TotalPrice/TotalPrice';
 // Импортируем тип
 
 function GridSmall() {
-  const { list, counters } = useCounterContext() as CounterContextType; // Привязываем тип к контексту
+  const { list } = useCounterContext() as CounterContextType; // Привязываем тип к контексту
 
   return (
     <div>
       <Grid justify="space-around" maw={444}>
         {list && list.length > 0 ? (
-          list.map((item, index) => (
+          list.map((item) => (
             <Grid.Col key={item.id} style={{ maxWidth: 444 }} p={0}>
-              <CardSmall item={item} index={index} />
+              <CardSmall item={item} />
             </Grid.Col>
           ))
         ) : (
@@ -31,7 +31,7 @@ function GridSmall() {
               Total
             </Text>
             <Text fw={600} fz="18px" lh="155%">
-              <TotalPrice list={list} />
+              <TotalPrice />
             </Text>
           </Group>
         )}

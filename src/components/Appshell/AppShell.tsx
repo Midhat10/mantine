@@ -18,10 +18,9 @@ function AppShellExample() {
   const { data } = useFetch<Item[]>(
     'https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json'
   );
-  const initialCounters = data ? data.map(() => 1) : [];
   return (
     <>
-      <CounterProvider initialCounters={initialCounters}>
+      <CounterProvider>
         <AppShell padding={{ base: 10, sm: 15, lg: 'xl' }} header={{ height: 60 }}>
           <AppShell.Header p="7.5px 20px">
             <Flex align="center" gap="md" p="0">

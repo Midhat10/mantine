@@ -10,7 +10,7 @@ vi.mock('../CounterContext/CounterContext', () => ({
 
 // Мокаем TotalPrice, чтобы не зависеть от его внутренней логики расчетов
 vi.mock('../TotalPrice/TotalPrice', () => ({
-  default: ({ list, counters }: any) => <div data-testid="total-price-mock">Total Mock</div>,
+  default: ({}: any) => <div data-testid="total-price-mock">Total Mock</div>,
 }));
 
 describe('GridSmall Component', () => {
