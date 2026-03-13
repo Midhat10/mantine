@@ -3,18 +3,10 @@
   height: 22px;
 }
 
-.dark {
-  display: none; /* Скрыть элемент в темной теме */
+:global([data-mantine-color-scheme='light']) .dark {
+  display: none;
 }
 
-.light {
-  display: block; /* Показать элемент в светлой теме */
-}
-
-.light .dark {
-  display: none; /* Скрыть элемент в светлой теме */
-}
-
-.dark .light {
-  display: block; /* Показать элемент в темной теме */
+:global([data-mantine-color-scheme='dark']) .light {
+  display: none;
 }
