@@ -37,9 +37,23 @@ function AppShellExample() {
             </Flex>
           </AppShell.Header>
 
-          <AppShell.Main bg="#f3f5fa">
-            <Title>Catalog</Title>
-
+          <AppShell.Main
+            style={{
+              transition: 'background-color 0.3s ease',
+              // Первый аргумент для светлой темы, второй для темной
+              backgroundColor:
+                'light-dark(var(--mantine-color-customGray-1), var(--mantine-color-customGray-9))',
+              minHeight: '100vh',
+            }}
+          >
+            <Title
+              order={1}
+              style={{
+                color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+              }}
+            >
+              Catalog
+            </Title>
             <GridExample data={data} length={0} />
           </AppShell.Main>
         </AppShell>

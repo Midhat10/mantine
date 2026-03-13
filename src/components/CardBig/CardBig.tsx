@@ -30,7 +30,16 @@ function CardBig({ item }: CardBigProps) {
       withBorder
       w={{ base: '100%', md: 302 }}
       h={{ base: 'auto', md: 414 }}
-      style={{ display: 'flex', flexDirection: 'column' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'background-color 0.3s ease, border-color 0.3s ease',
+        // Светлая: белый (#fff), Темная: customGray.8 (#343a40)
+        backgroundColor:
+          'light-dark(var(--mantine-color-white), var(--mantine-color-customGray-8))',
+        // Цвет рамки тоже можно адаптировать
+        borderColor: 'light-dark(var(--mantine-color-gray-3), var(--mantine-color-customGray-7))',
+      }}
     >
       {/* 1. Секция картинки: Резервируем место 240x240, чтобы вёрстка не дёргалась */}
       <Card.Section p="md">
@@ -71,7 +80,7 @@ function CardBig({ item }: CardBigProps) {
           $ {item.price}
         </Text>
         <Button
-          variant="filled"
+          variant="light"
           color="green"
           onClick={() => updateList(item, count)}
           radius="md"
