@@ -31,7 +31,7 @@ function GridSmall() {
               Total
             </Text>
             <Text fw={600} fz="18px" lh="155%">
-              <TotalPrice list={list} counters={counters} />
+              <TotalPrice list={list} />
             </Text>
           </Group>
         )}

@@ -1,28 +1,20 @@
 import React from 'react';
+import { useCounterContext } from '../CounterContext/CounterContext';
 
-// Определяем интерфейс для элемента списка
-interface ListItem {
-  price: number; // Предполагаем, что цена всегда число
-}
+const TotalPrice = () => {
+  // Берем и список товаров в корзине, и объект счетчиков
+  const { list, counters } = useCounterContext();
 
-// Определяем интерфейс для пропсов TotalPrice
-interface TotalPriceProps {
-  list: ListItem[]; // Массив элементов списка
-  counters: number[]; // Массив счетчиков
-}
+  const total = list.reduce((sum, item) => {
+    // Берем актуальное число из counters по id.
+    // Если в counters еще нет записи (товар только что добавили), считаем за 1.
+    const currentQty = counters[item.id] ?? 1;
 
-const TotalPrice: React.FC<TotalPriceProps> = ({ list, counters }) => {
-  const totalPrice = () => {
-    // Используем длину массива list
-    const prices = list.map((item, index) => {
-      return (item.price || 0) * (counters[index] || 0); // Умножаем цену на количество
-    });
+    return sum + item.price * currentQty;
+  }, 0);
 
-    // Суммируем итоговые цены
-    return prices.reduce((sum, current) => sum + current, 0);
-  };
-
-  return <>{totalPrice()}$</>;
+  // toFixed(2) нужен, чтобы цена $19.99 + $10.01 не превратилась в $30.000000000004
+  return <b>{total.toFixed(2)}$</b>;
 };
 
 export default TotalPrice;

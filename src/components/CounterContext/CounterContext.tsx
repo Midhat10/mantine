@@ -1,24 +1,24 @@
-import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 interface ListItem {
-  id: string; // или number, в зависимости от типа id
+  id: string;
   image: string;
   name: string;
   price: number;
+  quantity?: number; // Поле для хранения выбранного количества
 }
 
 export interface CounterContextType {
-  counters: number[];
-  increment: (index: number) => void;
-  decrement: (index: number) => void;
-  list: ListItem[]; // или GridExampleProps, если это необходимо
-  updateList: (newItem: ListItem) => void;
+  counters: Record<string, number>;
+  increment: (id: string) => void;
+  decrement: (id: string) => void;
+  list: ListItem[];
+  // ОБНОВИТЕ ЭТУ СТРОКУ: добавляем второй параметр
+  updateList: (newItem: ListItem, quantity: number) => void;
 }
 
-// Создаем контекст с типом
 const CounterContext = createContext<CounterContextType | undefined>(undefined);
 
-// Хук для использования контекста
 export const useCounterContext = () => {
   const context = useContext(CounterContext);
   if (!context) {
@@ -27,41 +27,48 @@ export const useCounterContext = () => {
   return context;
 };
 
-// Определяем интерфейс для пропсов CounterProvider
 interface CounterProviderProps {
   children: ReactNode;
-  initialCounters?: number[];
 }
 
-export const CounterProvider: React.FC<CounterProviderProps> = ({ children, initialCounters }) => {
-  const [counters, setCounters] = useState<number[]>(initialCounters || []);
-  const [list, setList] = useState<any[]>([]);
+export const CounterProvider: React.FC<CounterProviderProps> = ({ children }) => {
+  // Состояние счетчиков как объект
+  const [counters, setCounters] = useState<Record<string, number>>({});
+  const [list, setList] = useState<ListItem[]>([]);
 
-  useEffect(() => {
-    if (initialCounters && initialCounters.length > 0) {
-      setCounters(initialCounters);
-    }
-  }, [initialCounters]);
+  // Логика добавления в список (корзину)
+  const updateList = (newItem: ListItem, quantity: number) => {
+    setList((prevList) => {
+      // Проверяем, есть ли уже такой товар в корзине
+      const isExist = prevList.find((i) => i.id === newItem.id);
 
-  const updateList = (newItem: ListItem) => {
-    setList((prevList) => [...prevList, newItem]);
-  };
-
-  const increment = (index: number) => {
-    setCounters((prev) => {
-      const newCounters = [...prev];
-      newCounters[index] = (newCounters[index] || 1) + 1;
-      return newCounters;
+      if (isExist) {
+        // Если есть — обновляем у него количество
+        return prevList.map((i) => (i.id === newItem.id ? { ...i, quantity } : i));
+      }
+      // Если нет — добавляем новый с указанным количеством
+      return [...prevList, { ...newItem, quantity }];
     });
   };
 
-  const decrement = (index: number) => {
+  const increment = (id: string) => {
+    setCounters((prev) => ({
+      ...prev,
+      // Если в стейте еще нет id, берем 1 (база) и делаем +1
+      [id]: (prev[id] ?? 1) + 1,
+    }));
+  };
+
+  const decrement = (id: string) => {
     setCounters((prev) => {
-      const newCounters = [...prev];
-      if (newCounters[index] > 1) {
-        newCounters[index] -= 1;
-      }
-      return newCounters;
+      const current = prev[id] ?? 1;
+      if (current <= 1) {
+        return prev;
+      } // Не даем опуститься ниже 1
+      return {
+        ...prev,
+        [id]: current - 1,
+      };
     });
   };
 
