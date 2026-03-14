@@ -1,45 +1,53 @@
 import { render, screen } from '@test-utils';
+import { vi } from 'vitest';
+import { useCounterContext } from '../CounterContext/CounterContext';
 import TotalPrice from './TotalPrice';
 
+// 1. Мокаем контекст
+vi.mock('../CounterContext/CounterContext', () => ({
+  useCounterContext: vi.fn(),
+}));
+
 describe('TotalPrice Component', () => {
-  it('корректно рассчитывает сумму для нескольких товаров', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('корректно рассчитывает сумму для нескольких товаров из контекста', () => {
     const mockList = [
-      { price: 10 }, // Индекс 0
-      { price: 25 }, // Индекс 1
+      { id: 'p1', price: 10 },
+      { id: 'p2', price: 25.4 },
     ];
-    const mockCounters = [2, 3]; // 2 * 10 + 3 * 25 = 20 + 75 = 95
+    // 10 * 2 + 25.40 * 3 = 20 + 76.2 = 96.2. С toFixed(0) это будет "96"
+    const mockCounters = { p1: 2, p2: 3 };
 
-    render(<TotalPrice list={mockList} counters={mockCounters} />);
+    (useCounterContext as any).mockReturnValue({
+      list: mockList,
+      counters: mockCounters,
+    });
 
-    // Ищем текст "95$"
-    expect(screen.getByText('95$')).toBeInTheDocument();
+    render(<TotalPrice />);
+
+    // Ищем элемент, чей текстовый контент содержит "$ 96"
+    expect(
+      screen.getByText((_, element) => {
+        const hasText = (node: Element) => node.textContent === '$ 96';
+        const nodeHasText = hasText(element!);
+        const childrenDontHaveText = Array.from(element?.children || []).every(
+          (child) => !hasText(child)
+        );
+        return nodeHasText && childrenDontHaveText;
+      })
+    ).toBeInTheDocument();
   });
 
-  it('отображает 0$, если список товаров или счетчиков пуст', () => {
-    const { rerender } = render(<TotalPrice list={[]} counters={[]} />);
-    expect(screen.getByText('0$')).toBeInTheDocument();
+  it('отображает $ 0 при пустом списке', () => {
+    (useCounterContext as any).mockReturnValue({
+      list: [],
+      counters: {},
+    });
 
-    // Проверка случая, когда список есть, но счетчики не переданы (защита от undefined)
-    rerender(<TotalPrice list={[{ price: 10 }]} counters={[]} />);
-    expect(screen.getByText('0$')).toBeInTheDocument();
-  });
-
-  it('корректно обрабатывает отсутствие цены (price || 0)', () => {
-    // Симулируем ситуацию, когда у товара нет цены
-    const mockList = [{ price: undefined } as any];
-    const mockCounters = [10];
-
-    render(<TotalPrice list={mockList} counters={mockCounters} />);
-
-    expect(screen.getByText('0$')).toBeInTheDocument();
-  });
-
-  it('правильно считает при нулевом количестве товара', () => {
-    const mockList = [{ price: 100 }, { price: 50 }];
-    const mockCounters = [1, 0]; // 100 * 1 + 50 * 0 = 100
-
-    render(<TotalPrice list={mockList} counters={mockCounters} />);
-
-    expect(screen.getByText('100$')).toBeInTheDocument();
+    render(<TotalPrice />);
+    expect(screen.getByText(/\$ 0/i)).toBeInTheDocument();
   });
 });

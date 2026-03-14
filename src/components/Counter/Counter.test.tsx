@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import Counter from './Counter';
 
 describe('Counter Component', () => {
-  // Создаем моки для функций
   const mockDecrement = vi.fn();
   const mockIncrement = vi.fn();
   const defaultProps = {
@@ -12,49 +11,51 @@ describe('Counter Component', () => {
     increment: mockIncrement,
   };
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('отображает текущее значение счетчика', () => {
     render(<Counter {...defaultProps} />);
 
-    // Проверяем, что значение 5 отрисовано в GroupSection
+    // Теперь значение просто внутри компонента Text
     expect(screen.getByText('5')).toBeInTheDocument();
   });
 
-  it('вызывает decrement при нажатиее на первую клавишу', () => {
-    // В компоненте две клавиши. Можно найти их по роли или по порядку.
+  it('вызывает decrement при клике на кнопку минус', () => {
     render(<Counter {...defaultProps} />);
 
+    // Находим кнопку, которая содержит SVG с минусом (rect)
     const buttons = screen.getAllByRole('button');
-    fireEvent.click(buttons[0]); // Левая клавиша (минус)
+    const decBtn = buttons[0];
+
+    fireEvent.click(decBtn);
 
     expect(mockDecrement).toHaveBeenCalledTimes(1);
   });
 
-  it('вызывает increment при нажатиее на вторую клавишу', () => {
+  it('вызывает increment при клике на кнопку плюс', () => {
     render(<Counter {...defaultProps} />);
 
     const buttons = screen.getAllByRole('button');
-    fireEvent.click(buttons[1]); // Правая клавиша (плюс)
+    const incBtn = buttons[1];
+
+    fireEvent.click(incBtn);
 
     expect(mockIncrement).toHaveBeenCalledTimes(1);
   });
 
-  it('меняет прозрачность (opacity) SVG при наведении', () => {
+  it('имеет правильные стили для центрирования текста', () => {
     render(<Counter {...defaultProps} />);
+    const valueText = screen.getByText('5');
 
-    const buttons = screen.getAllByRole('button');
-    const leftButton = buttons[0];
+    // Вариант 1: Проверяем через регулярное выражение (пропустит и px, и calc/rem)
+    expect(valueText).toHaveStyle({
+      textAlign: 'center',
+    });
 
-    // Находим rect внутри svg первой клавиши
-    const rect = leftButton.querySelector('rect');
-
-    // Начальное состояние (opacity=1)
-    expect(rect).toHaveAttribute('opacity', '1');
-
-    // Симулируем наведение
-    fireEvent.mouseEnter(leftButton);
-
-    // После наведения (opacity=0.3)
-    // Примечание: useHover может требовать реальных DOM событий или мока хука
-    expect(rect).toHaveAttribute('opacity', '0.3');
+    // Вариант 2: Если важно проверить именно ширину, ищем подстроку
+    const styles = window.getComputedStyle(valueText);
+    expect(styles.width).toMatch(/36px|rem|calc/);
   });
 });

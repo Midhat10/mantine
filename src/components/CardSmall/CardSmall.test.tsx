@@ -3,21 +3,37 @@ import { vi } from 'vitest';
 import { useCounterContext } from '../CounterContext/CounterContext';
 import CardSmall from './CardSmall';
 
-// Мокаем контекст
+// 1. Мокаем контекст
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
 
+// Мокаем компонент Counter, чтобы упростить поиск кнопок
+vi.mock('../Counter/Counter', () => ({
+  default: ({ value, increment, decrement }: any) => (
+    <div>
+      <button type="button" onClick={decrement} aria-label="minus">
+        -
+      </button>
+      <span data-testid="count-value">{value}</span>
+      <button type="button" onClick={increment} aria-label="plus">
+        +
+      </button>
+    </div>
+  ),
+}));
+
 describe('CardSmall Component', () => {
   const mockItem = {
-    id: '2',
+    id: 'prod-100',
     image: 'small-image.jpg',
-    name: 'Adidas-Running',
+    name: 'Cucumber-Green',
     price: 90,
   };
 
   const mockContext = {
-    counters: { 5: 10 }, // Допустим, индекс карточки 5, значение 10
+    // В объекте counters теперь ключи — это ID (строки)
+    counters: { 'prod-100': 15 },
     increment: vi.fn(),
     decrement: vi.fn(),
   };
@@ -28,39 +44,48 @@ describe('CardSmall Component', () => {
   });
 
   it('рендерит изображение с корректным alt-текстом', () => {
-    render(<CardSmall item={mockItem} index={5} />);
+    render(<CardSmall item={mockItem} />);
 
-    // Теперь, когда alt={item.name}, мы ищем картинку по реальному имени
-    const img = screen.getByRole('img', { name: /adidas-running/i });
-
+    const img = screen.getByAltText('Cucumber-Green');
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute('src', 'small-image.jpg');
   });
 
-  it('отображает части имени товара отдельно', () => {
-    render(<CardSmall item={mockItem} index={5} />);
+  it('отображает части имени товара отдельно через split', () => {
+    render(<CardSmall item={mockItem} />);
 
-    // Проверяем сплит по дефису
-    expect(screen.getByText('Adidas')).toBeInTheDocument();
-    expect(screen.getByText('Running')).toBeInTheDocument();
+    // Используем /match/i для поиска подстроки (игнорируя регистр и соседние символы)
+    expect(screen.getByText(/Cucumber/i)).toBeInTheDocument();
+    expect(screen.getByText(/Green/i)).toBeInTheDocument();
   });
 
-  it('корректно работает с состоянием счетчика при разных индексах', () => {
-    // Проверяем, что берется значение именно по индексу 5
-    render(<CardSmall item={mockItem} index={5} />);
-    expect(screen.getByText('10')).toBeInTheDocument();
+  it('корректно берет значение счетчика из объекта по ID', () => {
+    render(<CardSmall item={mockItem} />);
+
+    // Ищем значение 15, которое мы задали в mockContext для 'prod-100'
+    expect(screen.getByTestId('count-value')).toHaveTextContent('15');
   });
 
-  it('вызывает методы контекста с правильным индексом', () => {
-    const testIndex = 5;
-    render(<CardSmall item={mockItem} index={testIndex} />);
+  it('вызывает методы контекста с ID товара вместо индекса', () => {
+    render(<CardSmall item={mockItem} />);
 
-    const buttons = screen.getAllByRole('button');
-    const incBtn = buttons[1]; // Обычно вторая клавиша в Counter — это плюс
+    const plusBtn = screen.getByLabelText('plus');
+    fireEvent.click(plusBtn);
 
-    fireEvent.click(incBtn);
+    // Проверяем, что в функцию ушел ID 'prod-100', а не число
+    expect(mockContext.increment).toHaveBeenCalledWith('prod-100');
+  });
 
-    // Проверяем, что в increment ушел именно наш индекс
-    expect(mockContext.increment).toHaveBeenCalledWith(testIndex);
+  it('показывает 1 по умолчанию, если в counters нет записи для этого ID', () => {
+    (useCounterContext as any).mockReturnValue({
+      counters: {}, // Пустой объект
+      increment: vi.fn(),
+      decrement: vi.fn(),
+    });
+
+    render(<CardSmall item={mockItem} />);
+
+    // Проверяем работу оператора ?? 1
+    expect(screen.getByTestId('count-value')).toHaveTextContent('1');
   });
 });

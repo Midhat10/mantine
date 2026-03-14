@@ -1,5 +1,5 @@
 import { render, screen } from '@test-utils';
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, Mock, vi } from 'vitest'; // Добавляем vi сюда
 import { useCounterContext } from '../CounterContext/CounterContext';
 import GridSmall from './GridSmall';
 
@@ -33,7 +33,7 @@ describe('GridSmall Component', () => {
   });
 
   it('отображает пустую корзину, если список товаров пуст', () => {
-    (useCounterContext as vi.Mock).mockReturnValue({
+    (useCounterContext as Mock).mockReturnValue({
       list: [],
       counters: {}, // Теперь это объект
     });
@@ -45,7 +45,7 @@ describe('GridSmall Component', () => {
   });
 
   it('рендерит список товаров и итоговую сумму, если корзина не пуста', () => {
-    (useCounterContext as vi.Mock).mockReturnValue({
+    (useCounterContext as Mock).mockReturnValue({
       list: mockItems,
       counters: { 'prod-1': 1, 'prod-2': 1 },
     });
@@ -63,7 +63,7 @@ describe('GridSmall Component', () => {
   });
 
   it('правильно передает withDivider: false только последней карточке', () => {
-    (useCounterContext as vi.Mock).mockReturnValue({
+    (useCounterContext as Mock).mockReturnValue({
       list: mockItems,
       counters: {},
     });

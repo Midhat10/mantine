@@ -8,69 +8,84 @@ vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
 
+// Мокаем Counter для упрощения поиска кнопок и значения
+vi.mock('../Counter/Counter', () => ({
+  default: ({ value, increment, decrement }: any) => (
+    <div>
+      <button type="button" onClick={decrement} aria-label="minus">
+        -
+      </button>
+      <span data-testid="count-value">{value}</span>
+      <button type="button" onClick={increment} aria-label="plus">
+        +
+      </button>
+    </div>
+  ),
+}));
+
 describe('CardBig Component', () => {
   const mockItem = {
-    id: '1',
+    id: 'prod-123',
     image: 'test-image.jpg',
     name: 'Nike Air-Max 270',
     price: 150,
   };
 
   const mockContext = {
-    counters: { 0: 2 }, // Значение счетчика для индекса 0 равно 2
+    // В объекте counters теперь ID в качестве ключа
+    counters: { 'prod-123': 5 },
     increment: vi.fn(),
     decrement: vi.fn(),
     updateList: vi.fn(),
   };
 
   beforeEach(() => {
-    // Сбрасываем моки перед каждым тестом
     vi.clearAllMocks();
     (useCounterContext as any).mockReturnValue(mockContext);
   });
 
   it('корректно отображает данные товара', () => {
-    render(<CardBig item={mockItem} index={0} />);
+    render(<CardBig item={mockItem} />);
 
-    // Проверка разделенного имени (Nike Air и Max 270)
-    expect(screen.getByText('Nike Air')).toBeInTheDocument();
-    expect(screen.getByText('Max 270')).toBeInTheDocument();
+    // Используем регулярные выражения для поиска частей имени (split по дефису)
+    expect(screen.getByText(/Nike Air/i)).toBeInTheDocument();
+    expect(screen.getByText(/Max 270/i)).toBeInTheDocument();
 
-    // Проверка цены
-    expect(screen.getByText('$ 150')).toBeInTheDocument();
+    // Проверка цены (с учетом символа доллара)
+    expect(screen.getByText(/\$ 150/i)).toBeInTheDocument();
 
-    // Ищем по роли 'img' и имени, которое берется из alt
-    const image = screen.getByRole('img', { name: mockItem.name });
+    // Проверка изображения по alt-тексту
+    const image = screen.getByAltText('Nike Air-Max 270');
     expect(image).toHaveAttribute('src', 'test-image.jpg');
   });
 
-  it('отображает правильное значение счетчика из контекста', () => {
-    render(<CardBig item={mockItem} index={0} />);
+  it('отображает правильное значение счетчика из контекста по ID', () => {
+    render(<CardBig item={mockItem} />);
 
-    // Проверяем, что внутри Counter отображается "2" (из нашего mockContext)
-    expect(screen.getByText('2')).toBeInTheDocument();
+    // Проверяем, что отображается "5", которое мы задали в mockContext
+    expect(screen.getByTestId('count-value')).toHaveTextContent('5');
   });
 
-  it('вызывает increment и decrement из контекста с правильным индексом', () => {
-    render(<CardBig item={mockItem} index={0} />);
+  it('вызывает методы контекста с ID товара вместо индекса', () => {
+    render(<CardBig item={mockItem} />);
 
-    const buttons = screen.getAllByRole('button');
-    const decBtn = buttons[0];
-    const incBtn = buttons[1];
+    const plusBtn = screen.getByLabelText('plus');
+    const minusBtn = screen.getByLabelText('minus');
 
-    fireEvent.click(incBtn);
-    expect(mockContext.increment).toHaveBeenCalledWith(0);
+    fireEvent.click(plusBtn);
+    expect(mockContext.increment).toHaveBeenCalledWith('prod-123');
 
-    fireEvent.click(decBtn);
-    expect(mockContext.decrement).toHaveBeenCalledWith(0);
+    fireEvent.click(minusBtn);
+    expect(mockContext.decrement).toHaveBeenCalledWith('prod-123');
   });
 
-  it('вызывает updateList при нажатиее на клавишу "Add to cart"', () => {
-    render(<CardBig item={mockItem} index={0} />);
+  it('вызывает updateList с двумя аргументами (item и текущее количество)', () => {
+    render(<CardBig item={mockItem} />);
 
-    const addToCartBtn = screen.getByRole('button', { name: /add to cart/i });
+    const addToCartBtn = screen.getByRole('button', { name: /add/i });
     fireEvent.click(addToCartBtn);
 
-    expect(mockContext.updateList).toHaveBeenCalledWith(mockItem);
+    // Проверяем, что передано и описание товара, и число 5 из счетчика
+    expect(mockContext.updateList).toHaveBeenCalledWith(mockItem, 5);
   });
 });
