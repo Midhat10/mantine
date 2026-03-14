@@ -2,14 +2,14 @@ import { render, screen } from '@test-utils';
 import { vi } from 'vitest';
 import { Popover } from '@mantine/core';
 import { useCounterContext } from '../CounterContext/CounterContext';
-import ButtonExample from './ButtonExample';
+import Button from './Button';
 
 // Мокаем контекст
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
 
-describe('ButtonExample Component', () => {
+describe('Button Component', () => {
   const mockContext = {
     list: [
       { id: '1', name: 'Item 1' },
@@ -26,7 +26,7 @@ describe('ButtonExample Component', () => {
     // Оборачиваем в Popover, так как Target не может существовать без родителя
     render(
       <Popover>
-        <ButtonExample />
+        <Button />
       </Popover>
     );
 
@@ -41,7 +41,7 @@ describe('ButtonExample Component', () => {
   it('отображает текст клавиши "Cart"', () => {
     render(
       <Popover>
-        <ButtonExample />
+        <Button />
       </Popover>
     );
 
@@ -53,7 +53,7 @@ describe('ButtonExample Component', () => {
 
     render(
       <Popover>
-        <ButtonExample />
+        <Button />
       </Popover>
     );
 
@@ -63,7 +63,7 @@ describe('ButtonExample Component', () => {
   it('содержит SVG значоку в правой части', () => {
     const { container } = render(
       <Popover>
-        <ButtonExample />
+        <Button />
       </Popover>
     );
 

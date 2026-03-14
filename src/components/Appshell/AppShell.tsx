@@ -1,10 +1,10 @@
-import { AppShell, Button, Flex, Text, Title } from '@mantine/core';
+import { Flex, AppShell as MantineAppShell, Button as MButton, Text, Title } from '@mantine/core';
 import { useFetch } from '@mantine/hooks';
-import ButtonExample from '../Button/ButtonExample';
+import Button from '../Button/Button';
 import { CounterProvider } from '../CounterContext/CounterContext';
-import GridExample from '../Grid/Grid';
+import Grid from '../Grid/Grid';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
-import PopOverExample from '../Popover/PopOver';
+import PopOver from '../Popover/PopOver';
 
 interface Item {
   id: string;
@@ -14,30 +14,30 @@ interface Item {
   category: string;
 }
 
-function AppShellExample() {
+function AppShell() {
   const { data } = useFetch<Item[]>(
     'https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json'
   );
   return (
     <>
       <CounterProvider>
-        <AppShell padding={{ base: 10, sm: 15, lg: 'xl' }} header={{ height: 60 }}>
-          <AppShell.Header p="7.5px 20px">
+        <MantineAppShell padding={{ base: 10, sm: 15, lg: 'xl' }} header={{ height: 60 }}>
+          <MantineAppShell.Header p="7.5px 20px">
             <Flex align="center" gap="md" p="0">
               <Text fw="600" fz="22px">
                 Vegetable
               </Text>
-              <Button autoContrast variant="filled" bg="green" fw="500" fz="20px" radius="xl">
+              <MButton autoContrast variant="filled" bg="green" fw="500" fz="20px" radius="xl">
                 SHOP
-              </Button>
+              </MButton>
               <LightDarkButton />
-              <PopOverExample>
-                <ButtonExample />
-              </PopOverExample>
+              <PopOver>
+                <Button />
+              </PopOver>
             </Flex>
-          </AppShell.Header>
+          </MantineAppShell.Header>
 
-          <AppShell.Main
+          <MantineAppShell.Main
             style={{
               transition: 'background-color 0.3s ease',
               // Первый аргумент для светлой темы, второй для темной
@@ -54,12 +54,12 @@ function AppShellExample() {
             >
               Catalog
             </Title>
-            <GridExample data={data} length={0} />
-          </AppShell.Main>
-        </AppShell>
+            <Grid data={data} length={0} />
+          </MantineAppShell.Main>
+        </MantineAppShell>
       </CounterProvider>
     </>
   );
 }
 
-export default AppShellExample;
+export default AppShell;

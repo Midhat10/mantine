@@ -1,11 +1,11 @@
-import { Badge, Button, Popover } from '@mantine/core';
+import { Badge, Button as MButton, Popover } from '@mantine/core';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
-function ButtonExample() {
+function Button() {
   const { list } = useCounterContext();
   return (
     <Popover.Target>
-      <Button
+      <MButton
         color="#54b46a"
         ml="auto"
         radius="md"
@@ -30,9 +30,9 @@ function ButtonExample() {
         }
       >
         Cart
-      </Button>
+      </MButton>
     </Popover.Target>
   );
 }
 
-export default ButtonExample;
+export default Button;
