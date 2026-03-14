@@ -10,7 +10,7 @@ function PopOverExample({ children }: PopOverExampleProps) {
   return (
     <Popover offset={24} trapFocus position="bottom" withArrow shadow="md">
       {children}
-      <Popover.Dropdown p={0}>
+      <Popover.Dropdown p={0} bdrs={16}>
         <GridSmall />
       </Popover.Dropdown>
     </Popover>

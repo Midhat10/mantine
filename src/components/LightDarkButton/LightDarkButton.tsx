@@ -17,6 +17,7 @@ function LightDarkButton() {
         onClick={() => setColorScheme(computedColorScheme === 'light' ? 'dark' : 'light')}
         variant="default"
         size="xl"
+        radius="100%"
         aria-label="Toggle color scheme"
       >
         <IconSun className={cx(styles.icon, styles.light)} stroke={1.5} />

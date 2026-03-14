@@ -1,87 +1,92 @@
 import React from 'react';
 import { AspectRatio, Box, Card, Group, Image, Stack, Text } from '@mantine/core';
-import { CardBigProps } from '../CardBig/CardBig';
 import Counter from '../Counter/Counter';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
-function CardSmall({ item }: CardBigProps) {
-  const { counters, increment, decrement } = useCounterContext();
+interface CardSmallProps {
+  item: any;
+  withDivider?: boolean; // false для последней карточки
+}
 
-  // Достаем значение по ID. Если в стейте пусто — показываем 1
+function CardSmall({ item, withDivider = true }: CardSmallProps) {
+  const { counters, increment, decrement } = useCounterContext();
   const count = counters[item.id] ?? 1;
 
-  // Подготавливаем имена
+  // Безопасно разделяем имя и вес
   const [firstName, lastName] = item.name.split('-');
 
-  const textStyles = {
-    color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-customGray-1))',
-  };
-
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="none" padding="md" radius="md" bg="transparent">
       <Group justify="space-between" align="center" wrap="nowrap">
         <Group gap="md" wrap="nowrap" style={{ flex: 1 }}>
-          {/* Резервируем строго 64x64 пикселя */}
+          {/* Контейнер для картинки 64x64 */}
           <Box w={64} h={64}>
             <AspectRatio ratio={1 / 1} w={64}>
               <Image
                 src={item.image}
                 alt={item.name}
                 fit="contain"
-                // Прозрачная заглушка, чтобы место не пустовало до загрузки
                 fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               />
             </AspectRatio>
           </Box>
 
-          <Stack gap={4}>
-            <Group gap={8} wrap="nowrap">
+          <Stack gap={4} style={{ overflow: 'hidden' }}>
+            <Group gap={6} wrap="nowrap">
               <Text
                 fw={600}
                 fz="18px"
                 truncate="end"
                 style={{
                   color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
-                  flexShrink: 1, // Название может сжиматься, если не влезает
+                  flexShrink: 1,
                 }}
               >
-                {firstName}
+                {firstName?.trim()}
               </Text>
               {lastName && (
                 <Text
-                  fw={600} // Вес делаем обычным шрифтом, не жирным
+                  fw={400}
                   fz="14px"
                   style={{
                     color:
                       'light-dark(var(--mantine-color-customGray-6), var(--mantine-color-customGray-3))',
-                    whiteSpace: 'nowrap', // Вес никогда не переносится
-                    flexShrink: 0, // Вес всегда виден полностью
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0,
                   }}
                 >
-                  {lastName}
+                  - {lastName.trim()}
                 </Text>
               )}
             </Group>
-            <Text fw={600} fz="20px" style={textStyles}>
+            <Text
+              fw={600}
+              fz="20px"
+              style={{
+                color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-white))',
+              }}
+            >
               $ {item.price}
             </Text>
           </Stack>
         </Group>
 
         <Counter
-          value={count} // Теперь используем переменную count
-          decrement={() => decrement(item.id)} // Передаем id вместо index
-          increment={() => increment(item.id)} // Передаем id вместо index
+          value={count}
+          decrement={() => decrement(item.id)}
+          increment={() => increment(item.id)}
         />
       </Group>
 
-      {/* Линию лучше вынести за пределы Group или стилизовать через Divider Mantine */}
+      {/* Разделитель с динамическим отступом */}
       <div
         style={{
-          marginLeft: 76,
-          marginTop: 16,
-          borderBottom: `1px solid ${'light-dark(var(--mantine-color-customGray-3), var(--mantine-color-customGray-6))'}`,
-          opacity: 0.5,
+          // Если НЕ последняя — 76px (после фото), если последняя — 0 (на всю ширину)
+          marginLeft: withDivider ? 76 : 0,
+          marginTop: withDivider ? 18 : 28,
+          borderBottom:
+            '1px solid light-dark(var(--mantine-color-customGray-3), var(--mantine-color-customGray-7))',
+          transition: 'margin-left 0.2s ease',
         }}
       />
     </Card>

@@ -29,7 +29,6 @@ function CardBig({ item }: CardBigProps) {
       shadow="sm"
       padding="md"
       radius="md"
-      withBorder
       w={{ base: '100%', md: 302 }}
       h={{ base: 'auto', md: 414 }}
       style={{
