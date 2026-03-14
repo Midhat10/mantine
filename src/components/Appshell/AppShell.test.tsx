@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import { useFetch } from '@mantine/hooks';
 import AppShellExample from './AppShell';
 
-// 1. Мокаем useFetch
 vi.mock('@mantine/hooks', async () => {
   const actual = await vi.importActual('@mantine/hooks');
   return {
