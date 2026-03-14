@@ -1,4 +1,3 @@
-import React from 'react';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
 const TotalPrice = () => {
@@ -14,7 +13,7 @@ const TotalPrice = () => {
   }, 0);
 
   // toFixed(2) нужен, чтобы цена $19.99 + $10.01 не превратилась в $30.000000000004
-  return <b>{total.toFixed(2)}$</b>;
+  return <b>$ {total.toFixed(0)}</b>;
 };
 
 export default TotalPrice;

@@ -20,6 +20,10 @@ function CardBig({ item }: CardBigProps) {
 
   const [firstName, lastName] = item.name.split('-');
 
+  const textStyles = {
+    color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-customGray-1))',
+  };
+
   return (
     <Card
       shadow="sm"
@@ -89,7 +93,7 @@ function CardBig({ item }: CardBigProps) {
       </Group>
 
       <Group justify="space-between" align="center" mt="auto">
-        <Text fw={700} fz="20px" style={{ whiteSpace: 'nowrap' }}>
+        <Text fw={700} fz="20px" style={{ ...textStyles, whiteSpace: 'nowrap' }}>
           $ {item.price}
         </Text>
         <Button

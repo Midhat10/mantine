@@ -1,68 +1,66 @@
-import { Button } from '@mantine/core';
-import { useHover } from '@mantine/hooks';
+import { Button, Group, Text } from '@mantine/core';
 
-// Определяем интерфейс для пропсов Counter
 interface CounterProps {
-  value: number; // Значение счетчика
-  decrement: () => void; // Функция для уменьшения значения
-  increment: () => void; // Функция для увеличения значения
+  value: number;
+  decrement: () => void;
+  increment: () => void;
 }
 
 function Counter({ value, decrement, increment }: CounterProps) {
-  const { hovered: hovered1, ref: ref1 } = useHover();
-  const { hovered: hovered2, ref: ref2 } = useHover();
+  // Базовые стили для кнопок "+" и "-"
+  const btnStyles = {
+    // В светлой теме — светло-серый, в темной — чуть светлее карточки
+    backgroundColor: 'light-dark(var(--mantine-color-gray-2), var(--mantine-color-customGray-7))',
+    color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+    border: 'none',
+  };
 
   return (
-    <Button.Group>
+    <Group gap={0} wrap="nowrap" align="center">
+      {/* Кнопка минус */}
       <Button
-        ref={ref1}
-        variant="default"
-        radius="md"
         onClick={decrement}
-        bg="#dee2e6"
-        maw={30}
-        p={9}
-      >
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            y="7"
-            width="2"
-            height="12"
-            transform="rotate(-90 0 7)"
-            fill="#212529"
-            opacity={hovered1 ? 0.3 : 1}
-          />
-        </svg>
-      </Button>
-      <Button.GroupSection variant="default" bg="var(--mantine-color-body)" maw={30} p={9}>
-        {value}
-      </Button.GroupSection>
-      <Button
-        ref={ref2}
         variant="default"
+        w={30}
+        h={30}
+        p={0}
         radius="md"
-        onClick={increment}
-        bg="#dee2e6"
-        maw={30}
-        p={9}
+        style={btnStyles}
       >
-        <svg
-          width="12"
-          height="12"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M7 0H5V5H0V7H5V12H7V7H12V5H7V0Z" fill="#212529" opacity={hovered2 ? 0.3 : 1} />
+        <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org">
+          <rect width="10" height="2" fill="currentColor" />
         </svg>
       </Button>
-    </Button.Group>
+
+      {/* Цифра по центру */}
+      <Text
+        w={36} // Задаем фиксированную ширину, чтобы кнопки не «гуляли» при смене 9 на 10
+        ta="center" // Выравнивание текста строго по центру блока
+        fw={600}
+        fz="16px"
+        style={{
+          color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+          userSelect: 'none', // Чтобы цифра не выделялась синим при быстрых кликах
+        }}
+      >
+        {value}
+      </Text>
+
+      {/* Кнопка плюс */}
+      <Button
+        onClick={increment}
+        variant="default"
+        w={30}
+        h={30}
+        p={0}
+        radius="md"
+        style={btnStyles}
+      >
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org">
+          <path d="M6 0H4V4H0V6H4V10H6V6H10V4H6V0Z" fill="currentColor" />
+        </svg>
+      </Button>
+    </Group>
   );
 }
 

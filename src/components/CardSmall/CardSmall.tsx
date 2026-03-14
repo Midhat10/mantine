@@ -13,6 +13,10 @@ function CardSmall({ item }: CardBigProps) {
   // Подготавливаем имена
   const [firstName, lastName] = item.name.split('-');
 
+  const textStyles = {
+    color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-customGray-1))',
+  };
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Group justify="space-between" align="center" wrap="nowrap">
@@ -32,16 +36,33 @@ function CardSmall({ item }: CardBigProps) {
 
           <Stack gap={4}>
             <Group gap={8} wrap="nowrap">
-              <Text fw={600} fz="18px">
+              <Text
+                fw={600}
+                fz="18px"
+                truncate="end"
+                style={{
+                  color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+                  flexShrink: 1, // Название может сжиматься, если не влезает
+                }}
+              >
                 {firstName}
               </Text>
               {lastName && (
-                <Text fw={600} fz="14px" c="dimmed">
+                <Text
+                  fw={600} // Вес делаем обычным шрифтом, не жирным
+                  fz="14px"
+                  style={{
+                    color:
+                      'light-dark(var(--mantine-color-customGray-6), var(--mantine-color-customGray-3))',
+                    whiteSpace: 'nowrap', // Вес никогда не переносится
+                    flexShrink: 0, // Вес всегда виден полностью
+                  }}
+                >
                   {lastName}
                 </Text>
               )}
             </Group>
-            <Text fw={700} fz="20px">
+            <Text fw={600} fz="20px" style={textStyles}>
               $ {item.price}
             </Text>
           </Stack>
@@ -59,7 +80,7 @@ function CardSmall({ item }: CardBigProps) {
         style={{
           marginLeft: 76,
           marginTop: 16,
-          borderBottom: '1px solid var(--mantine-color-gray-3)',
+          borderBottom: `1px solid ${'light-dark(var(--mantine-color-customGray-3), var(--mantine-color-customGray-6))'}`,
           opacity: 0.5,
         }}
       />

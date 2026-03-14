@@ -9,6 +9,9 @@ import TotalPrice from '../TotalPrice/TotalPrice';
 function GridSmall() {
   const { list } = useCounterContext() as CounterContextType; // Привязываем тип к контексту
 
+  const textStyles = {
+    color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-customGray-0))',
+  };
   return (
     <div>
       <Grid justify="space-around" maw={444}>
@@ -26,7 +29,7 @@ function GridSmall() {
         )}
 
         {list.length > 0 && (
-          <Group justify="space-between" w="100%" p="24px 24px">
+          <Group justify="space-between" w="100%" p="24px 24px" style={textStyles}>
             <Text fw={600} fz="18px" lh="155%">
               Total
             </Text>
