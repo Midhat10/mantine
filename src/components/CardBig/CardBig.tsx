@@ -19,7 +19,6 @@ function CardBig({ item }: CardBigProps) {
   const { counters, increment, decrement, updateList } = useCounterContext();
   const count = counters[item.id] ?? 1;
 
-  // Безопасно разбиваем имя
   const [firstName, lastName] = item.name.split('-');
 
   return (
@@ -34,27 +33,24 @@ function CardBig({ item }: CardBigProps) {
         display: 'flex',
         flexDirection: 'column',
         transition: 'background-color 0.3s ease, border-color 0.3s ease',
-        // Светлая: белый (#fff), Темная: customGray.8 (#343a40)
+
         backgroundColor:
           'light-dark(var(--mantine-color-white), var(--mantine-color-customGray-8))',
-        // Цвет рамки тоже можно адаптировать
+
         borderColor: 'light-dark(var(--mantine-color-gray-3), var(--mantine-color-customGray-7))',
       }}
     >
-      {/* 1. Секция картинки: Резервируем место 240x240, чтобы вёрстка не дёргалась */}
       <Card.Section p="md">
         <AspectRatio ratio={1 / 1} maw={240} mx="auto">
           <Image
             src={item.image}
             alt={item.name}
             fit="contain"
-            // Skeleton показывается автоматически, пока картинка в процессе загрузки
             fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
         </AspectRatio>
       </Card.Section>
 
-      {/* 2. Контентная часть: Названия слева, Счетчик справа */}
       <Group justify="space-between" align="flex-start" mt="md" wrap="nowrap">
         <Stack gap={0} style={{ overflow: 'hidden', flex: 1 }}>
           <Text fw={600} fz="18px" lh="1.2" truncate="end">
@@ -74,7 +70,6 @@ function CardBig({ item }: CardBigProps) {
         />
       </Group>
 
-      {/* 3. Футер: Цена и Кнопка с иконкой */}
       <Group justify="space-between" align="center" mt="auto">
         <Text fw={700} fz="20px" style={{ whiteSpace: 'nowrap' }}>
           $ {item.price}
@@ -84,7 +79,6 @@ function CardBig({ item }: CardBigProps) {
           color="green"
           onClick={() => updateList(item, count)}
           radius="md"
-          // Адаптивная ширина кнопки, чтобы влезла цена
           w={{ base: 'auto', md: 170 }}
           h={44}
           rightSection={<IconShoppingCart size={18} stroke={1.5} />}

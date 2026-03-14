@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Group, Image, Stack, Text } from '@mantine/core';
+import { AspectRatio, Box, Card, Group, Image, Stack, Text } from '@mantine/core';
 import { CardBigProps } from '../CardBig/CardBig';
 import Counter from '../Counter/Counter';
 import { useCounterContext } from '../CounterContext/CounterContext';
@@ -16,8 +16,19 @@ function CardSmall({ item }: CardBigProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Group justify="space-between" align="center" wrap="nowrap">
-        <Group gap="md">
-          <Image src={item.image} alt={item.name} mah={64} maw={64} fit="contain" />
+        <Group gap="md" wrap="nowrap" style={{ flex: 1 }}>
+          {/* Резервируем строго 64x64 пикселя */}
+          <Box w={64} h={64}>
+            <AspectRatio ratio={1 / 1} w={64}>
+              <Image
+                src={item.image}
+                alt={item.name}
+                fit="contain"
+                // Прозрачная заглушка, чтобы место не пустовало до загрузки
+                fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+              />
+            </AspectRatio>
+          </Box>
 
           <Stack gap={4}>
             <Group gap={8} wrap="nowrap">
