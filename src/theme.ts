@@ -1,22 +1,20 @@
-// import { Button, createTheme } from '@mantine/core';
 import { createTheme } from '@mantine/core';
 
 const theme = createTheme({
   colors: {
-    // Ваша палитра для фонов (10 оттенков)
     customGray: [
-      '#fff', // 0
-      '#f3f5fa', // 1 (ваш любимый светлый фон)
-      '#e9ecef', // 2
-      '#dee2e6', // 3
-      '#ced4da', // 4
-      '#adb5bd', // 5 (заменил дубль ced4da на стандартный шаг для градиента)
-      '#868e96', // 6
-      '#495057', // 7
-      '#343a40', // 8
-      '#212529', // 9 (ваш глубокий темный фон)
+      '#fff',
+      '#f3f5fa',
+      '#e9ecef',
+      '#dee2e6',
+      '#ced4da',
+      '#adb5bd',
+      '#868e96',
+      '#495057',
+      '#343a40',
+      '#212529',
     ],
-    // Ваша палитра для кнопок (из предыдущего шага)
+
     vegetable: [
       '#eefcf1',
       '#def6e4',

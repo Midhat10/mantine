@@ -40,7 +40,6 @@ function AppShell() {
           <MantineAppShell.Main
             style={{
               transition: 'background-color 0.3s ease',
-              // Первый аргумент для светлой темы, второй для темной
               backgroundColor:
                 'light-dark(var(--mantine-color-customGray-1), var(--mantine-color-customGray-9))',
               minHeight: '100vh',

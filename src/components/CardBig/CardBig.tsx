@@ -62,7 +62,7 @@ function CardBig({ item }: CardBigProps) {
             truncate="end"
             style={{
               color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
-              flexShrink: 1, // Название может сжиматься, если не влезает
+              flexShrink: 1,
             }}
           >
             {firstName}
@@ -70,13 +70,13 @@ function CardBig({ item }: CardBigProps) {
 
           {lastName && (
             <Text
-              fw={600} // Вес делаем обычным шрифтом, не жирным
+              fw={600}
               fz="14px"
               style={{
                 color:
                   'light-dark(var(--mantine-color-customGray-6), var(--mantine-color-customGray-3))',
-                whiteSpace: 'nowrap', // Вес никогда не переносится
-                flexShrink: 0, // Вес всегда виден полностью
+                whiteSpace: 'nowrap',
+                flexShrink: 0,
               }}
             >
               {lastName}

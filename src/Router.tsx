@@ -9,7 +9,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/mantine', // Добавляем этот параметр
+    basename: '/mantine',
   }
 );
 

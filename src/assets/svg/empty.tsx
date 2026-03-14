@@ -20,29 +20,29 @@ function Empty() {
       <path
         d="M7.57129 16.63L20.5713 15.53C22.1924 15.3881 23.813 15.8073 25.1619 16.7175C26.5109 17.6277 27.5062 18.9736 27.9813 20.53L40.4413 62.23L38.0013 66.6C37.3746 67.726 37.0652 69.0009 37.1061 70.2889C37.147 71.5769 37.5368 72.8296 38.2337 73.9135C38.9306 74.9974 39.9087 75.8719 41.0635 76.4436C42.2184 77.0153 43.5068 77.2629 44.7913 77.16L94.6913 72.92"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M29.8413 26.86L87.8413 21.94C88.4127 21.891 88.9877 21.9713 89.5238 22.1749C90.0599 22.3786 90.5432 22.7003 90.938 23.1162C91.3328 23.5321 91.6289 24.0316 91.8043 24.5775C91.9797 25.1235 92.03 25.7019 91.9513 26.27L88.0213 54.64C87.902 55.4911 87.4998 56.2774 86.8795 56.8724C86.2591 57.4673 85.4567 57.8363 84.6013 57.92L40.4413 62.23L29.8413 26.86Z"
         fill="white"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M50.3414 86.72C52.9426 86.72 55.0514 84.6113 55.0514 82.01C55.0514 79.4088 52.9426 77.3 50.3414 77.3C47.7401 77.3 45.6313 79.4088 45.6313 82.01C45.6313 84.6113 47.7401 86.72 50.3414 86.72Z"
         fill="white"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M83.1412 83.94C85.7424 83.94 87.8512 81.8313 87.8512 79.23C87.8512 76.6288 85.7424 74.52 83.1412 74.52C80.5399 74.52 78.4312 76.6288 78.4312 79.23C78.4312 81.8313 80.5399 83.94 83.1412 83.94Z"
         fill="white"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M17.8658 14.4041L5.60986 15.444C4.54776 15.5341 3.75982 16.4682 3.84994 17.5303C3.94006 18.5924 4.87412 19.3803 5.93621 19.2902L18.1922 18.2502C19.2543 18.1601 20.0422 17.2261 19.9521 16.164C19.862 15.1019 18.9279 14.3139 17.8658 14.4041Z"
@@ -51,8 +51,8 @@ function Empty() {
       <path
         d="M54.2612 48.77C54.5004 46.9449 55.3563 45.2565 56.6869 43.9847C58.0175 42.7129 59.743 41.9342 61.577 41.7777C63.411 41.6213 65.2433 42.0965 66.7701 43.1246C68.297 44.1527 69.4264 45.6718 69.9712 47.43"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M70.1012 37.98C70.7198 37.98 71.2212 37.4785 71.2212 36.86C71.2212 36.2414 70.7198 35.74 70.1012 35.74C69.4826 35.74 68.9812 36.2414 68.9812 36.86C68.9812 37.4785 69.4826 37.98 70.1012 37.98Z"
@@ -65,40 +65,40 @@ function Empty() {
       <path
         d="M20.8013 80.6199V84.9299"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.6514 82.77H22.9514"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <path d="M89.5112 0.5V4.8" stroke="#BABABA" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M89.5112 0.5V4.8" stroke="#BABABA" strokeLinecap="round" strokeLinejoin="round" />
       <path
         d="M87.3613 2.65015H91.6613"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M38.6013 13.3501V17.6501"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M36.4412 15.5H40.7512"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M100.241 29.1599C100.805 29.1599 101.261 28.7032 101.261 28.1399C101.261 27.5765 100.805 27.1199 100.241 27.1199C99.6779 27.1199 99.2212 27.5765 99.2212 28.1399C99.2212 28.7032 99.6779 29.1599 100.241 29.1599Z"
         fill="white"
         stroke="#BABABA"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M62.1214 19.99C62.6626 19.99 63.1014 19.5513 63.1014 19.01C63.1014 18.4688 62.6626 18.03 62.1214 18.03C61.5801 18.03 61.1414 18.4688 61.1414 19.01C61.1414 19.5513 61.5801 19.99 62.1214 19.99Z"

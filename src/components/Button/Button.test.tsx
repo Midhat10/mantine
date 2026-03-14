@@ -4,7 +4,6 @@ import { Popover } from '@mantine/core';
 import { useCounterContext } from '../CounterContext/CounterContext';
 import Button from './Button';
 
-// Мокаем контекст
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
@@ -23,18 +22,15 @@ describe('Button Component', () => {
   });
 
   it('отображает корректное количество элементов в Badge', () => {
-    // Оборачиваем в Popover, так как Target не может существовать без родителя
     render(
       <Popover>
         <Button />
       </Popover>
     );
 
-    // Ищем число 2 (длина массива list)
     const badge = screen.getByText('2');
     expect(badge).toBeInTheDocument();
 
-    // Проверяем, что это именно Badge (в Mantine это обычно div или span с классом)
     expect(badge.closest('.mantine-Badge-root')).toBeInTheDocument();
   });
 

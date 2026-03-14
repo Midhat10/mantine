@@ -32,16 +32,12 @@ describe('AppShellExample Integration', () => {
   });
 
   it('рендерит список товаров после успешной наполнениеи данных', async () => {
-    // Имитируем успешный ответ от Программный стык
     (useFetch as any).mockReturnValue({ data: mockData, loading: false, error: null });
 
     render(<AppShellExample />);
 
-    // Проверяем наличие элементов в Header
     expect(screen.getByText('SHOP')).toBeInTheDocument();
 
-    // Проверяем, что данные дошли до GridExample (ищем названия овощей)
-    // Используем waitFor, если рендеринг Grid происходит не мгновенно
     await waitFor(() => {
       expect(screen.getByText(/Carrot/i)).toBeInTheDocument();
       expect(screen.getByText(/Tomato/i)).toBeInTheDocument();
@@ -53,7 +49,6 @@ describe('AppShellExample Integration', () => {
 
     render(<AppShellExample />);
 
-    // Клавиша корзины (ButtonExample) должна показывать 0 в Badge
     const cartBadge = screen.getByText('0');
     expect(cartBadge).toBeInTheDocument();
   });

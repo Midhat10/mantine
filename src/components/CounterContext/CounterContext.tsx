@@ -5,7 +5,7 @@ interface ListItem {
   image: string;
   name: string;
   price: number;
-  quantity?: number; // Поле для хранения выбранного количества
+  quantity?: number;
 }
 
 export interface CounterContextType {
@@ -32,21 +32,17 @@ interface CounterProviderProps {
 }
 
 export const CounterProvider: React.FC<CounterProviderProps> = ({ children }) => {
-  // Состояние счетчиков как объект
   const [counters, setCounters] = useState<Record<string, number>>({});
   const [list, setList] = useState<ListItem[]>([]);
 
-  // Логика добавления в список (корзину)
   const updateList = (newItem: ListItem, quantity: number) => {
     setList((prevList) => {
-      // Проверяем, есть ли уже такой товар в корзине
       const isExist = prevList.find((i) => i.id === newItem.id);
 
       if (isExist) {
-        // Если есть — обновляем у него количество
         return prevList.map((i) => (i.id === newItem.id ? { ...i, quantity } : i));
       }
-      // Если нет — добавляем новый с указанным количеством
+
       return [...prevList, { ...newItem, quantity }];
     });
   };
@@ -54,7 +50,6 @@ export const CounterProvider: React.FC<CounterProviderProps> = ({ children }) =>
   const increment = (id: string) => {
     setCounters((prev) => ({
       ...prev,
-      // Если в стейте еще нет id, берем 1 (база) и делаем +1
       [id]: (prev[id] ?? 1) + 1,
     }));
   };
@@ -64,7 +59,7 @@ export const CounterProvider: React.FC<CounterProviderProps> = ({ children }) =>
       const current = prev[id] ?? 1;
       if (current <= 1) {
         return prev;
-      } // Не даем опуститься ниже 1
+      }
       return {
         ...prev,
         [id]: current - 1,

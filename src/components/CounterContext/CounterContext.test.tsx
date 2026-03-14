@@ -13,7 +13,7 @@ describe('CounterProvider', () => {
   it('должен инициализироваться с пустым объектом счетчиков и пустым списком', () => {
     const { result } = renderHook(() => useCounterContext(), { wrapper });
 
-    expect(result.current.counters).toEqual({}); // Теперь это объект {}
+    expect(result.current.counters).toEqual({});
     expect(result.current.list).toEqual([]);
   });
 
@@ -24,7 +24,6 @@ describe('CounterProvider', () => {
       result.current.increment('prod-1');
     });
 
-    // Логика: (undefined ?? 1) + 1 = 2
     expect(result.current.counters['prod-1']).toBe(2);
 
     act(() => {
@@ -44,10 +43,9 @@ describe('CounterProvider', () => {
     expect(result.current.counters['prod-1']).toBe(1);
 
     act(() => {
-      result.current.decrement('prod-1'); // Пытаемся уменьшить ниже 1
+      result.current.decrement('prod-1');
     });
 
-    // Значение должно остаться 1 (согласно нашей проверке в контексте)
     expect(result.current.counters['prod-1']).toBe(1);
   });
 
@@ -55,7 +53,6 @@ describe('CounterProvider', () => {
     const { result } = renderHook(() => useCounterContext(), { wrapper });
 
     act(() => {
-      // Вызываем с двумя аргументами: объект и число
       result.current.updateList(mockItem, 5);
     });
 
@@ -68,7 +65,7 @@ describe('CounterProvider', () => {
 
     act(() => {
       result.current.updateList(mockItem, 1);
-      result.current.updateList(mockItem, 10); // Обновляем тот же ID
+      result.current.updateList(mockItem, 10);
     });
 
     expect(result.current.list).toHaveLength(1);

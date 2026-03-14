@@ -3,12 +3,10 @@ import { vi } from 'vitest';
 import { useCounterContext } from '../CounterContext/CounterContext';
 import CardBig from './CardBig';
 
-// 1. Мокаем хук контекста
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
 
-// Мокаем Counter для упрощения поиска кнопок и значения
 vi.mock('../Counter/Counter', () => ({
   default: ({ value, increment, decrement }: any) => (
     <div>
@@ -32,7 +30,6 @@ describe('CardBig Component', () => {
   };
 
   const mockContext = {
-    // В объекте counters теперь ID в качестве ключа
     counters: { 'prod-123': 5 },
     increment: vi.fn(),
     decrement: vi.fn(),
@@ -47,14 +44,11 @@ describe('CardBig Component', () => {
   it('корректно отображает данные товара', () => {
     render(<CardBig item={mockItem} />);
 
-    // Используем регулярные выражения для поиска частей имени (split по дефису)
     expect(screen.getByText(/Nike Air/i)).toBeInTheDocument();
     expect(screen.getByText(/Max 270/i)).toBeInTheDocument();
 
-    // Проверка цены (с учетом символа доллара)
     expect(screen.getByText(/\$ 150/i)).toBeInTheDocument();
 
-    // Проверка изображения по alt-тексту
     const image = screen.getByAltText('Nike Air-Max 270');
     expect(image).toHaveAttribute('src', 'test-image.jpg');
   });
@@ -62,7 +56,6 @@ describe('CardBig Component', () => {
   it('отображает правильное значение счетчика из контекста по ID', () => {
     render(<CardBig item={mockItem} />);
 
-    // Проверяем, что отображается "5", которое мы задали в mockContext
     expect(screen.getByTestId('count-value')).toHaveTextContent('5');
   });
 
@@ -85,7 +78,6 @@ describe('CardBig Component', () => {
     const addToCartBtn = screen.getByRole('button', { name: /add/i });
     fireEvent.click(addToCartBtn);
 
-    // Проверяем, что передано и описание товара, и число 5 из счетчика
     expect(mockContext.updateList).toHaveBeenCalledWith(mockItem, 5);
   });
 });

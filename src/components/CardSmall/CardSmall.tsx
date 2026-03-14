@@ -5,21 +5,19 @@ import { useCounterContext } from '../CounterContext/CounterContext';
 
 interface CardSmallProps {
   item: any;
-  withDivider?: boolean; // false для последней карточки
+  withDivider?: boolean;
 }
 
 function CardSmall({ item, withDivider = true }: CardSmallProps) {
   const { counters, increment, decrement } = useCounterContext();
   const count = counters[item.id] ?? 1;
 
-  // Безопасно разделяем имя и вес
   const [firstName, lastName] = item.name.split('-');
 
   return (
     <Card shadow="none" padding="md" radius="md" bg="transparent">
       <Group justify="space-between" align="center" wrap="nowrap">
         <Group gap="md" wrap="nowrap" style={{ flex: 1 }}>
-          {/* Контейнер для картинки 64x64 */}
           <Box w={64} h={64}>
             <AspectRatio ratio={1 / 1} w={64}>
               <Image
@@ -78,10 +76,8 @@ function CardSmall({ item, withDivider = true }: CardSmallProps) {
         />
       </Group>
 
-      {/* Разделитель с динамическим отступом */}
       <div
         style={{
-          // Если НЕ последняя — 76px (после фото), если последняя — 0 (на всю ширину)
           marginLeft: withDivider ? 76 : 0,
           marginTop: withDivider ? 18 : 28,
           borderBottom:

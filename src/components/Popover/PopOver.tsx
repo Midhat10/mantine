@@ -1,9 +1,8 @@
 import { Popover as MPopover } from '@mantine/core';
 import GridSmall from '../GridSmall/GridSmall';
 
-// Определяем интерфейс для пропсов PopOverExample
 interface PopOverProps {
-  children: React.ReactNode; // Тип для children
+  children: React.ReactNode;
 }
 
 function PopOver({ children }: PopOverProps) {

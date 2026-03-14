@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import { useCounterContext } from '../CounterContext/CounterContext';
 import PopOverExample from './PopOver';
 
-// 1. Мокаем контекст для GridSmall, который находится внутри поповера
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));

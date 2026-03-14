@@ -3,12 +3,10 @@ import { beforeEach, describe, expect, it, Mock, vi } from 'vitest'; // Доба
 import { useCounterContext } from '../CounterContext/CounterContext';
 import GridSmall from './GridSmall';
 
-// 1. Мокаем контекст
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
 
-// Мокаем CardSmall, чтобы проверить пропс withDivider
 vi.mock('../CardSmall/CardSmall', () => ({
   default: ({ item, withDivider }: any) => (
     <div data-testid="card-small" data-divider={withDivider}>
@@ -17,7 +15,6 @@ vi.mock('../CardSmall/CardSmall', () => ({
   ),
 }));
 
-// Мокаем TotalPrice
 vi.mock('../TotalPrice/TotalPrice', () => ({
   default: () => <span data-testid="total-price-mock">99.99</span>,
 }));
@@ -35,7 +32,7 @@ describe('GridSmall Component', () => {
   it('отображает пустую корзину, если список товаров пуст', () => {
     (useCounterContext as Mock).mockReturnValue({
       list: [],
-      counters: {}, // Теперь это объект
+      counters: {},
     });
 
     render(<GridSmall />);
@@ -52,12 +49,10 @@ describe('GridSmall Component', () => {
 
     render(<GridSmall />);
 
-    // Проверяем отрисовку карточек
     const cards = screen.getAllByTestId('card-small');
     expect(cards).toHaveLength(2);
     expect(screen.getByText('Tomato-Veg')).toBeInTheDocument();
 
-    // Проверяем секцию Total
     expect(screen.getByText('Total')).toBeInTheDocument();
     expect(screen.getByTestId('total-price-mock')).toBeInTheDocument();
   });
@@ -72,10 +67,8 @@ describe('GridSmall Component', () => {
 
     const cards = screen.getAllByTestId('card-small');
 
-    // Первая карточка: withDivider должен быть true (индекс 0 !== 1)
     expect(cards[0].getAttribute('data-divider')).toBe('true');
 
-    // Последняя карточка: withDivider должен быть false (индекс 1 === 1)
     expect(cards[1].getAttribute('data-divider')).toBe('false');
   });
 });

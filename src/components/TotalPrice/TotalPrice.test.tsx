@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import { useCounterContext } from '../CounterContext/CounterContext';
 import TotalPrice from './TotalPrice';
 
-// 1. Мокаем контекст
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
 }));
@@ -18,7 +17,7 @@ describe('TotalPrice Component', () => {
       { id: 'p1', price: 10 },
       { id: 'p2', price: 25.4 },
     ];
-    // 10 * 2 + 25.40 * 3 = 20 + 76.2 = 96.2. С toFixed(0) это будет "96"
+
     const mockCounters = { p1: 2, p2: 3 };
 
     (useCounterContext as any).mockReturnValue({
@@ -28,7 +27,6 @@ describe('TotalPrice Component', () => {
 
     render(<TotalPrice />);
 
-    // Ищем элемент, чей текстовый контент содержит "$ 96"
     expect(
       screen.getByText((_, element) => {
         const hasText = (node: Element) => node.textContent === '$ 96';

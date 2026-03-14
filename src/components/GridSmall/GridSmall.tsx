@@ -17,15 +17,9 @@ function GridSmall() {
         <Stack gap={0}>
           {/* Список товаров */}
           {list.map((item, index) => (
-            <CardSmall
-              key={item.id}
-              item={item}
-              // Проверяем, является ли текущий элемент последним в списке
-              withDivider={index !== list.length - 1}
-            />
+            <CardSmall key={item.id} item={item} withDivider={index !== list.length - 1} />
           ))}
 
-          {/* Итоговая стоимость (идет сразу после длинной черты последней карточки) */}
           <Group justify="space-between" p="0px 24px 24px" style={textStyles}>
             <Text fw={600} fz="18px">
               Total

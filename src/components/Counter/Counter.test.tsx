@@ -18,14 +18,12 @@ describe('Counter Component', () => {
   it('отображает текущее значение счетчика', () => {
     render(<Counter {...defaultProps} />);
 
-    // Теперь значение просто внутри компонента Text
     expect(screen.getByText('5')).toBeInTheDocument();
   });
 
   it('вызывает decrement при клике на кнопку минус', () => {
     render(<Counter {...defaultProps} />);
 
-    // Находим кнопку, которая содержит SVG с минусом (rect)
     const buttons = screen.getAllByRole('button');
     const decBtn = buttons[0];
 
@@ -49,12 +47,10 @@ describe('Counter Component', () => {
     render(<Counter {...defaultProps} />);
     const valueText = screen.getByText('5');
 
-    // Вариант 1: Проверяем через регулярное выражение (пропустит и px, и calc/rem)
     expect(valueText).toHaveStyle({
       textAlign: 'center',
     });
 
-    // Вариант 2: Если важно проверить именно ширину, ищем подстроку
     const styles = window.getComputedStyle(valueText);
     expect(styles.width).toMatch(/36px|rem|calc/);
   });

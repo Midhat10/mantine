@@ -23,7 +23,7 @@ function Counter({ value, decrement, increment }: CounterProps) {
         p={0}
         radius="md"
         style={btnStyles}
-        aria-label="decrement" // Для тестов и доступности
+        aria-label="decrement"
       >
         <svg width="10" height="2" viewBox="0 0 10 2" fill="none" xmlns="http://www.w3.org">
           <rect width="10" height="2" fill="currentColor" />
@@ -51,7 +51,7 @@ function Counter({ value, decrement, increment }: CounterProps) {
         p={0}
         radius="md"
         style={btnStyles}
-        aria-label="increment" // Для тестов и доступности
+        aria-label="increment"
       >
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org">
           <path d="M6 0H4V4H0V6H4V10H6V6H10V4H6V0Z" fill="currentColor" />
