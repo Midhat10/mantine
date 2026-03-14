@@ -1,6 +1,5 @@
-import React from 'react';
 import { IconShoppingCart } from '@tabler/icons-react';
-import { AspectRatio, Button, Card, Group, Image, Skeleton, Stack, Text } from '@mantine/core';
+import { AspectRatio, Button, Card, Group, Image, Text } from '@mantine/core';
 import Counter from '../Counter/Counter';
 import { useCounterContext } from '../CounterContext/CounterContext';
 
@@ -51,17 +50,36 @@ function CardBig({ item }: CardBigProps) {
         </AspectRatio>
       </Card.Section>
 
-      <Group justify="space-between" align="flex-start" mt="md" wrap="nowrap">
-        <Stack gap={0} style={{ overflow: 'hidden', flex: 1 }}>
-          <Text fw={600} fz="18px" lh="1.2" truncate="end">
+      <Group justify="space-between" align="center" mt="md" wrap="nowrap" h={44}>
+        {/* Левая часть: Имя и Вес в одну линию */}
+        <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden', flex: 1 }}>
+          <Text
+            fw={600}
+            fz="18px"
+            truncate="end"
+            style={{
+              color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+              flexShrink: 1, // Название может сжиматься, если не влезает
+            }}
+          >
             {firstName}
           </Text>
+
           {lastName && (
-            <Text fw={600} fz="14px" c="dimmed" truncate="end">
+            <Text
+              fw={600} // Вес делаем обычным шрифтом, не жирным
+              fz="14px"
+              style={{
+                color:
+                  'light-dark(var(--mantine-color-customGray-6), var(--mantine-color-customGray-3))',
+                whiteSpace: 'nowrap', // Вес никогда не переносится
+                flexShrink: 0, // Вес всегда виден полностью
+              }}
+            >
               {lastName}
             </Text>
           )}
-        </Stack>
+        </Group>
 
         <Counter
           value={count}
