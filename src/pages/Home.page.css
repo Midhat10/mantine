@@ -1,8 +1,5 @@
 .main-container {
+  margin: 0 auto;
   width: 300px;
   padding: 20px;
-}
-
-.main-container > *:not(:last-child) {
-  margin-bottom: 20px;
 }

@@ -1,0 +1,29 @@
+.modal {
+  position: absolute;
+  padding: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  border: 2px solid black;
+  background-color: lightgray;
+  z-index: 3;
+}
+
+.text {
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+
+  margin: 0;
+  border: none;
+  border-radius: 100%;
+  background-color: transparent;
+
+  box-shadow: 2px 2px 4px;
+  font-size: large;
+}
