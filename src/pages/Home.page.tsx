@@ -1,53 +1,43 @@
-import { useDeferredValue, useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 import './Home.page.css';
 
-function SearchResultComponent({ searchResult }) {
-  const deferredSearchResult = useDeferredValue(searchResult);
-  return (
-    <ul>
-      {deferredSearchResult.map((item) => (
-        <li key={item}>{item}</li>
-      ))}
-    </ul>
-  );
+import { Comments } from '@/components/Comments';
+
+interface Comment {
+  postId: number;
+  id: number;
+  name: string;
+  email: string;
+  body: string;
 }
 
-export function HomePage() {
-  const [searchResult, setSearchResult] = useState<Array<number>>([]);
-  const [searchCount, setSearchCount] = useState(0);
-  const [isPending, startTransition] = useTransition();
-  const [showSearchHistory, setShowSearchHistory] = useState(false);
+const filterBySearch = (entities: Comment[], search: string) =>
+  entities.filter((item) => item.name.concat(item.body).includes(search));
 
-  const makeSearch = () => {
-    setSearchCount((prevCount) => prevCount + 1);
+export function HomePage() {
+  // const [isPending, startTransition] = useTransition();
+
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [search, setSearch] = useState('');
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     // startTransition(() => {
-    setSearchResult(
-      Array(20000)
-        .fill(undefined)
-        .map((_, i) => i + 1)
-    );
     // });
+    setSearch(e.target.value);
   };
 
-  console.log('counter');
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/comments')
+      .then((res) => res.json())
+      .then((data: Comment[]) => setComments(data));
+  }, []);
 
   return (
     <div>
-      <button type="button" onClick={makeSearch}>
-        {searchCount === 0 ? 'Search' : `Search ${searchCount} times`}
-      </button>
-      <button type="button" onClick={() => setShowSearchHistory(true)}>
-        Search History
-      </button>
-      {showSearchHistory ? (
-        <section> Your search results</section>
-      ) : (
-        <section>
-          {/* {isPending ? 'Loading...' : null} */}
-          <SearchResultComponent searchResult={searchResult} />
-        </section>
-      )}
+      <input onChange={handleSearch} />
+      {/* {isPending && <h1>Вычисление...</h1>} */}
+      <Comments entities={filterBySearch(comments, search)} />
     </div>
   );
 }
