@@ -19,6 +19,7 @@ function LightDarkButton() {
         size="xl"
         radius="100%"
         aria-label="Toggle color scheme"
+        style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)' }}
       >
         <IconSun className={cx(styles.icon, styles.light)} stroke={1.5} />
         <IconMoon className={cx(styles.icon, styles.dark)} stroke={1.5} />

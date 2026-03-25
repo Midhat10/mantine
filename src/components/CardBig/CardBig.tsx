@@ -1,27 +1,18 @@
-import { IconShoppingCart } from '@tabler/icons-react';
-import { AspectRatio, Button, Card, Group, Image, Text } from '@mantine/core';
-import Counter from '../Counter/Counter';
-import { useCounterContext } from '../CounterContext/CounterContext';
+import { AspectRatio, Button, Card, Image, Stack, Text } from '@mantine/core';
 
-export interface Item {
-  id: string;
-  image: string;
-  name: string;
-  price: number;
+export interface Launch {
+  links?: { mission_patch_small: string };
+  rocket?: { rocket_name: string };
+  mission_name: string;
 }
 
 export interface CardBigProps {
-  item: Item;
+  launch: Launch;
 }
 
-function CardBig({ item }: CardBigProps) {
-  const { counters, increment, decrement, updateList } = useCounterContext();
-  const count = counters[item.id] ?? 1;
-
-  const [firstName, lastName] = item.name.split('-');
-
+function CardBig({ launch }: CardBigProps) {
   const textStyles = {
-    color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-customGray-1))',
+    color: 'light-dark(var(--mantine-color--black-3), var(--mantine-color-customGray-1))',
   };
 
   return (
@@ -29,12 +20,14 @@ function CardBig({ item }: CardBigProps) {
       shadow="sm"
       padding="md"
       radius="md"
+      withBorder
+      mx="auto"
       w={{ base: '100%', md: 302 }}
       h={{ base: 'auto', md: 414 }}
       style={{
         display: 'flex',
         flexDirection: 'column',
-        transition: 'background-color 0.3s ease, border-color 0.3s ease',
+        transition: 'background-color 0.6s ease, border-color 0.6s ease',
 
         backgroundColor:
           'light-dark(var(--mantine-color-white), var(--mantine-color-customGray-8))',
@@ -43,70 +36,49 @@ function CardBig({ item }: CardBigProps) {
       }}
     >
       <Card.Section p="md">
-        <AspectRatio ratio={1 / 1} maw={240} mx="auto">
+        <AspectRatio ratio={1 / 1} maw={200} mx="auto">
           <Image
-            src={item.image}
-            alt={item.name}
+            src={launch.links?.mission_patch_small}
+            alt={launch.mission_name}
             fit="contain"
             fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
         </AspectRatio>
       </Card.Section>
 
-      <Group justify="space-between" align="center" mt="md" wrap="nowrap" h={44}>
-        {/* Левая часть: Имя и Вес в одну линию */}
-        <Group gap={6} wrap="nowrap" style={{ overflow: 'hidden', flex: 1 }}>
-          <Text
-            fw={600}
-            fz="18px"
-            truncate="end"
-            style={{
-              color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
-              flexShrink: 1,
-            }}
-          >
-            {firstName}
-          </Text>
-
-          {lastName && (
-            <Text
-              fw={600}
-              fz="14px"
-              style={{
-                color:
-                  'light-dark(var(--mantine-color-customGray-6), var(--mantine-color-customGray-3))',
-                whiteSpace: 'nowrap',
-                flexShrink: 0,
-              }}
-            >
-              {lastName}
-            </Text>
-          )}
-        </Group>
-
-        <Counter
-          value={count}
-          decrement={() => decrement(item.id)}
-          increment={() => increment(item.id)}
-        />
-      </Group>
-
-      <Group justify="space-between" align="center" mt="auto">
-        <Text fw={700} fz="20px" style={{ ...textStyles, whiteSpace: 'nowrap' }}>
-          $ {item.price}
-        </Text>
-        <Button
-          variant="light"
-          color="green"
-          onClick={() => updateList(item, count)}
-          radius="md"
-          w={{ base: 'auto', md: 170 }}
-          h={44}
-          rightSection={<IconShoppingCart size={18} stroke={1.5} />}
+      <Stack align="center" gap={10}>
+        <Text
+          fw={600}
+          fz="18px"
+          truncate="end"
+          style={{
+            color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
+            flexShrink: 1,
+          }}
         >
-          Add
-        </Button>
-      </Group>
+          {launch.mission_name}
+        </Text>
+
+        <Text
+          fw={700}
+          fz="20px"
+          style={{
+            color: 'light-dark(var(--mantine-color-gray-4), var(--mantine-color-gray-6))',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {launch.rocket?.rocket_name}
+        </Text>
+      </Stack>
+      <Button
+        variant="filled"
+        color="light-dark(var(--mantine-color-blue-6),var(--mantine-color-blue-4))"
+        radius="md"
+        h={44}
+        mt="auto"
+      >
+        See more
+      </Button>
     </Card>
   );
 }
