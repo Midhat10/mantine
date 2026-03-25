@@ -4,6 +4,9 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
+  server: {
+    host: '127.0.0.1', // вместо localhost
+  },
   plugins: [react(), tsconfigPaths()],
   base: '/mantine/',
   test: {

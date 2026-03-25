@@ -1,43 +1,106 @@
-import { useEffect, useState, useTransition } from 'react';
-
 import './Home.page.css';
 
-import { Comments } from '@/components/Comments';
+import { useReducer, useState } from 'react';
 
-interface Comment {
-  postId: number;
-  id: number;
-  name: string;
-  email: string;
-  body: string;
-}
+const books = [
+  'Война и мир',
+  '1984',
+  'Преступление и наказание',
+  'Улисс',
+  'Гордость и предубеждение',
+  'Тихий Дон',
+  'Великий Гэтсби',
+];
 
-const filterBySearch = (entities: Comment[], search: string) =>
-  entities.filter((item) => item.name.concat(item.body).includes(search));
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'add_book':
+      return {
+        ...state, // если у нас в стейте лежит больше посылов, чем одно
+        books: [...state.books, action.payload],
+      };
+    case 'take_book':
+      return {
+        ...state,
+        books: state.books.filter((book) => book !== action.payload),
+      };
+    case 'inventory':
+      return {
+        ...state,
+        inventory: [...state.inventory, new Date().toLocaleString()],
+      };
+    case 'type_text':
+      return {
+        ...state,
+        value: action.payload,
+      };
+    default:
+      return state;
+  }
+};
 
-export function HomePage() {
-  // const [isPending, startTransition] = useTransition();
+function HomePage() {
+  const [state, dispatch] = useReducer(reducer, { books, inventory: [], value: '' });
 
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [search, setSearch] = useState('');
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // startTransition(() => {
-    // });
-    setSearch(e.target.value);
+  const handleAddBook = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: 'add_book',
+      payload: state.value,
+    });
   };
 
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/comments')
-      .then((res) => res.json())
-      .then((data: Comment[]) => setComments(data));
-  }, []);
+  const handleTakeBook = (book) => () => {
+    dispatch({
+      type: 'take_book',
+      payload: book,
+    });
+  };
+
+  const handleInventory = () => {
+    dispatch({
+      type: 'inventory',
+    });
+  };
+
+  const handleText = (e) => {
+    dispatch({
+      type: 'type_text',
+      payload: e.target.value,
+    });
+  };
+
+  console.log('state', state);
 
   return (
-    <div>
-      <input onChange={handleSearch} />
-      {/* {isPending && <h1>Вычисление...</h1>} */}
-      <Comments entities={filterBySearch(comments, search)} />
-    </div>
+    <>
+      <h3>Список книг</h3>
+      <form>
+        <input value={state.value} onChange={handleText} type="text" />
+        <button type="submit" className="add" onClick={handleAddBook}>
+          Добавить книгу
+        </button>
+      </form>
+      <ul className="list">
+        {state.books.map((book) => (
+          <li key={book}>
+            <div>{book}</div>
+            <button type="button" onClick={handleTakeBook(book)}>
+              Выдать книгу
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <h3>Инвентаризация</h3>
+      {state.inventory.map((date) => (
+        <div key={date}>{date}</div>
+      ))}
+      <button onClick={handleInventory} type="button">
+        Провести инвентаризацию
+      </button>
+    </>
   );
 }
+
+export default HomePage;
