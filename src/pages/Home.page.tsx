@@ -32,7 +32,7 @@ const reducer = (state, action) => {
     case 'type_text':
       return {
         ...state,
-        value: action.payload,
+        ...action.payload,
       };
     default:
       return state;
@@ -66,7 +66,7 @@ function HomePage() {
   const handleText = (e) => {
     dispatch({
       type: 'type_text',
-      payload: e.target.value,
+      payload: { value: e.target.value },
     });
   };
 
