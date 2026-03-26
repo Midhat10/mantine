@@ -1,4 +1,4 @@
-import { AspectRatio, Button, Card, Image, Stack, Text } from '@mantine/core';
+import { AspectRatio, Button, Image, Card as MCard, Stack, Text } from '@mantine/core';
 
 export interface Launch {
   links?: { mission_patch_small: string };
@@ -6,17 +6,13 @@ export interface Launch {
   mission_name: string;
 }
 
-export interface CardBigProps {
+export interface CardProps {
   launch: Launch;
 }
 
-function CardBig({ launch }: CardBigProps) {
-  const textStyles = {
-    color: 'light-dark(var(--mantine-color--black-3), var(--mantine-color-customGray-1))',
-  };
-
+function Card({ launch }: CardProps) {
   return (
-    <Card
+    <MCard
       shadow="sm"
       padding="md"
       radius="md"
@@ -35,7 +31,7 @@ function CardBig({ launch }: CardBigProps) {
         borderColor: 'light-dark(var(--mantine-color-gray-3), var(--mantine-color-customGray-7))',
       }}
     >
-      <Card.Section p="md">
+      <MCard.Section p="md">
         <AspectRatio ratio={1 / 1} maw={200} mx="auto">
           <Image
             src={launch.links?.mission_patch_small}
@@ -44,7 +40,7 @@ function CardBig({ launch }: CardBigProps) {
             fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
           />
         </AspectRatio>
-      </Card.Section>
+      </MCard.Section>
 
       <Stack align="center" gap={10}>
         <Text
@@ -79,8 +75,8 @@ function CardBig({ launch }: CardBigProps) {
       >
         See more
       </Button>
-    </Card>
+    </MCard>
   );
 }
 
-export default CardBig;
+export default Card;

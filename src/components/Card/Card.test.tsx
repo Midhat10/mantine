@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@test-utils';
 import { vi } from 'vitest';
 import { useCounterContext } from '../CounterContext/CounterContext';
-import CardBig from './CardBig';
+import CardBig from './Card';
 
 vi.mock('../CounterContext/CounterContext', () => ({
   useCounterContext: vi.fn(),
