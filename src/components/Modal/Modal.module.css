@@ -1,0 +1,26 @@
+.modal {
+  position: fixed;
+  padding: 20px;
+  top: 50%; /* относительно вьюпорта. Меняет исходную точку. Но перемещает верхний край на центр, а не середину объекта */
+  left: 50%; /* относительно вьюпорта меняет исходную точку. Но перемещает левый край на центр, а не середину объекта */
+  transform: translate(
+    -50%,
+    -50%
+  ); /*  относительно своей исходной точки. 50% - это размеры самого модуля. И на его половинку
+  он перемещается обратно - на лево и на верх */
+  border-radius: 5px;
+  z-index: 3;
+  background-color: light-dark(white, var(--mantine-color-gray-7));
+}
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+
+  margin: 0;
+  border: none;
+  /* box-shadow: 2px 2px 4px; */
+  font-size: 20px;
+  background-color: transparent;
+}

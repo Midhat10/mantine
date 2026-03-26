@@ -2,6 +2,7 @@ import { Group, AppShell as MantineAppShell, Title } from '@mantine/core';
 import { useFetch } from '@mantine/hooks';
 import Grid from '../Grid/Grid';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
+import Modal from '../Modal/Modal';
 
 interface Item {
   links?: { mission_patch_small: string };
