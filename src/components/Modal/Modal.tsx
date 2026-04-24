@@ -1,10 +1,19 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './Modal.module.css';
 
 const modalElement = document.getElementById('modal')!;
 
 function Modal({ children, onClose }: { children: ReactNode; onClose: () => void }) {
+  function keyDownClose(evt: KeyboardEvent) {
+    if (evt.code === 'Escape') {
+      onClose();
+    }
+  }
+  useEffect(() => {
+    document.addEventListener('keydown', keyDownClose);
+    return () => document.removeEventListener('keydown', keyDownClose);
+  }, []);
   return createPortal(
     <div className={styles.modal}>
       <button type="button" onClick={onClose} className={styles.close}>

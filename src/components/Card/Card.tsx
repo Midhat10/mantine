@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { AspectRatio, Button, Image, Card as MCard, Stack, Text, Title } from '@mantine/core';
+import Layout from '../Layout/Layout';
 import Modal from '../Modal/Modal';
 
 export interface Launch {
   links?: { mission_patch_small: string };
   rocket?: { rocket_name: string };
   mission_name: string;
-  details: string;
+  details?: string;
 }
 
 export interface CardProps {
@@ -87,23 +88,26 @@ function Card({ launch }: CardProps) {
         </Button>
       </MCard>
       {isModalOpen && (
-        <Modal onClose={handleIsModalOpen}>
-          <Title order={2}>{launch.mission_name}</Title>
-          <AspectRatio ratio={1 / 1} maw={200} mx="auto">
-            <Image
-              src={launch.links?.mission_patch_small}
-              alt={launch.mission_name}
-              fit="contain"
-              fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-            />
-          </AspectRatio>
-          <Title order={5}>Mission name:</Title>
-          {launch.mission_name}
-          <Title order={5}>Rocket name:</Title>
-          {launch.rocket?.rocket_name}
-          <Title order={5}>Details:</Title>
-          <p style={{ marginTop: 0 }}>{launch.details}</p>
-        </Modal>
+        <>
+          <Layout onClose={handleIsModalOpen} />
+          <Modal onClose={handleIsModalOpen}>
+            <Title order={2}>{launch.mission_name}</Title>
+            <AspectRatio ratio={1 / 1} maw={200} mx="auto">
+              <Image
+                src={launch.links?.mission_patch_small}
+                alt={launch.mission_name}
+                fit="contain"
+                fallbackSrc="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+              />
+            </AspectRatio>
+            <Title order={5}>Mission name:</Title>
+            {launch.mission_name}
+            <Title order={5}>Rocket name:</Title>
+            {launch.rocket?.rocket_name}
+            <Title order={5}>Details:</Title>
+            <p style={{ marginTop: 0 }}>{launch.details}</p>
+          </Modal>
+        </>
       )}
     </>
   );

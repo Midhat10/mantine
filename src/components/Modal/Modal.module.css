@@ -9,7 +9,7 @@
   ); /*  относительно своей исходной точки. 50% - это размеры самого модуля. И на его половинку
   он перемещается обратно - на лево и на верх */
   border-radius: 5px;
-  z-index: 3;
+  z-index: 2;
   background-color: light-dark(white, var(--mantine-color-gray-7));
 }
 

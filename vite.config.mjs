@@ -6,6 +6,21 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   base: '/mantine/',
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+      mangle: true,
+      format: {
+        comments: false,
+      },
+    },
+    sourcemap: false,
+    reportCompressedSize: true,
+  },
   test: {
     globals: true,
     environment: 'jsdom',
