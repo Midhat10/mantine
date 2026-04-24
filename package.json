@@ -36,6 +36,7 @@
     "@mantine/spotlight": "^8.3.15",
     "@mantine/tiptap": "^8.3.15",
     "@tabler/icons-react": "^3.37.1",
+    "@tiptap/core": "^3.22.4",
     "@tiptap/extension-link": "^3.20.0",
     "@tiptap/pm": "^3.20.0",
     "@tiptap/react": "^3.20.0",
@@ -45,6 +46,7 @@
     "embla-carousel-react": "^8.6.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-is": "^19.2.5",
     "react-router-dom": "^7.9.4",
     "recharts": "^3.7.0"
   },
@@ -61,6 +63,7 @@
     "@types/node": "^25.0.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.1",
+    "@types/react-is": "^19",
     "@vitejs/plugin-react": "^5.0.4",
     "eslint": "^9.37.0",
     "eslint-config-mantine": "^4.0.3",
