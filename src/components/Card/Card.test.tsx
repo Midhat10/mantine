@@ -1,83 +1,41 @@
-// import { fireEvent, render, screen } from '@test-utils';
-// import { vi } from 'vitest';
-// import { useCounterContext } from '../CounterContext/CounterContext';
-// import CardBig from './Card';
+import { fireEvent, render, screen } from '@test-utils';
+import Card from './Card';
 
-// vi.mock('../CounterContext/CounterContext', () => ({
-//   useCounterContext: vi.fn(),
-// }));
+describe('Card Component', () => {
+  const mockItem = {
+    links: { mission_patch_small: 'https://images2.imgbox.com/4f/d2/kTjuhrb0_o.png' },
+    rocket: { rocket_name: 'Falcon 8' },
+    mission_name: 'Starlink-14 (v1.0)',
+    details: 'Ну что нибудь про ракетку',
+  };
 
-// vi.mock('../Counter/Counter', () => ({
-//   default: ({ value, increment, decrement }: any) => (
-//     <div>
-//       <button type="button" onClick={decrement} aria-label="minus">
-//         -
-//       </button>
-//       <span data-testid="count-value">{value}</span>
-//       <button type="button" onClick={increment} aria-label="plus">
-//         +
-//       </button>
-//     </div>
-//   ),
-// }));
+  beforeEach(() => {
+    const modalRoot = document.createElement('div');
+    modalRoot.setAttribute('id', 'modal');
+    document.body.appendChild(modalRoot);
+  });
 
-// describe('CardBig Component', () => {
-//   const mockItem = {
-//     id: 'prod-123',
-//     image: 'test-image.jpg',
-//     name: 'Nike Air-Max 270',
-//     price: 150,
-//   };
+  afterEach(() => {
+    const modalRoot = document.getElementById('modal');
+    document.body.removeChild(modalRoot);
+  });
 
-//   const mockContext = {
-//     counters: { 'prod-123': 5 },
-//     increment: vi.fn(),
-//     decrement: vi.fn(),
-//     updateList: vi.fn(),
-//   };
+  it('корректно отображает данные товара', () => {
+    render(<Card launch={mockItem} />);
 
-//   beforeEach(() => {
-//     vi.clearAllMocks();
-//     (useCounterContext as any).mockReturnValue(mockContext);
-//   });
+    expect(screen.getByText(/Falcon 8/i)).toBeInTheDocument();
+    expect(screen.getByText(/Starlink-14/i)).toBeInTheDocument();
 
-//   it('корректно отображает данные товара', () => {
-//     render(<CardBig item={mockItem} />);
+    const image = screen.getByAltText(/Starlink-14/i);
+    expect(image).toHaveAttribute('src', 'https://images2.imgbox.com/4f/d2/kTjuhrb0_o.png');
+  });
+  it('нажимается кнопка', async () => {
+    render(<Card launch={mockItem} />);
 
-//     expect(screen.getByText(/Nike Air/i)).toBeInTheDocument();
-//     expect(screen.getByText(/Max 270/i)).toBeInTheDocument();
+    const button = screen.getByText(/see more/i);
+    fireEvent.click(button);
 
-//     expect(screen.getByText(/\$ 150/i)).toBeInTheDocument();
-
-//     const image = screen.getByAltText('Nike Air-Max 270');
-//     expect(image).toHaveAttribute('src', 'test-image.jpg');
-//   });
-
-//   it('отображает правильное значение счетчика из контекста по ID', () => {
-//     render(<CardBig item={mockItem} />);
-
-//     expect(screen.getByTestId('count-value')).toHaveTextContent('5');
-//   });
-
-//   it('вызывает методы контекста с ID товара вместо индекса', () => {
-//     render(<CardBig item={mockItem} />);
-
-//     const plusBtn = screen.getByLabelText('plus');
-//     const minusBtn = screen.getByLabelText('minus');
-
-//     fireEvent.click(plusBtn);
-//     expect(mockContext.increment).toHaveBeenCalledWith('prod-123');
-
-//     fireEvent.click(minusBtn);
-//     expect(mockContext.decrement).toHaveBeenCalledWith('prod-123');
-//   });
-
-//   it('вызывает updateList с двумя аргументами (item и текущее количество)', () => {
-//     render(<CardBig item={mockItem} />);
-
-//     const addToCartBtn = screen.getByRole('button', { name: /add/i });
-//     fireEvent.click(addToCartBtn);
-
-//     expect(mockContext.updateList).toHaveBeenCalledWith(mockItem, 5);
-//   });
-// });
+    const modal = await screen.findByRole('dialog');
+    expect(modal).toBeInTheDocument();
+  });
+});

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useReducer } from 'react';
 import { AspectRatio, Button, Image, Card as MCard, Stack, Text, Title } from '@mantine/core';
 import Layout from '../Layout/Layout';
 import Modal from '../Modal/Modal';
@@ -14,12 +14,36 @@ export interface CardProps {
   launch: Launch;
 }
 
+type State = {
+  isModalOpen: boolean;
+};
+
+type Action = { type: 'close' } | { type: 'open' };
+
+function reducer(state: State, action: Action) {
+  switch (action.type) {
+    case 'close':
+      return {
+        ...state,
+        isModalOpen: false,
+      };
+    case 'open':
+      return {
+        ...state,
+        isModalOpen: true,
+      };
+    default:
+      return state;
+  }
+}
+
 function Card({ launch }: CardProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [state, dispatcher] = useReducer(reducer, { isModalOpen: false });
 
   const handleIsModalOpen = () => {
-    setIsModalOpen(false);
+    dispatcher({ type: 'close' });
   };
+
   return (
     <>
       <MCard
@@ -82,12 +106,12 @@ function Card({ launch }: CardProps) {
           radius="md"
           h={44}
           mt="auto"
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => dispatcher({ type: 'open' })}
         >
           See more
         </Button>
       </MCard>
-      {isModalOpen && (
+      {state.isModalOpen && (
         <>
           <Layout onClose={handleIsModalOpen} />
           <Modal onClose={handleIsModalOpen}>

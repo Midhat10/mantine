@@ -1,15 +1,8 @@
 import { Group, AppShell as MantineAppShell, Title } from '@mantine/core';
 import { useFetch } from '@mantine/hooks';
+import { Item } from '@/types';
 import Grid from '../Grid/Grid';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
-import Modal from '../Modal/Modal';
-
-interface Item {
-  links?: { mission_patch_small: string };
-  rocket?: { rocket_name: string };
-  mission_name: string;
-  details: string;
-}
 
 function AppShell() {
   const { data } = useFetch<Item[]>('https://api.spacexdata.com/v3/launches?launch_year=2020');

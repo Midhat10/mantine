@@ -1,54 +1,51 @@
-// import { render, screen, waitFor } from '@test-utils';
-// import { vi } from 'vitest';
-// import { useFetch } from '@mantine/hooks';
-// import AppShellExample from './AppShell';
+import { render, screen } from '@test-utils';
+import { vi } from 'vitest';
+import { useFetch } from '@mantine/hooks';
+import AppShell from './AppShell';
 
-// vi.mock('@mantine/hooks', async () => {
-//   const actual = await vi.importActual('@mantine/hooks');
-//   return {
-//     ...actual,
-//     useFetch: vi.fn(),
-//   };
-// });
+vi.mock('@mantine/hooks', async () => {
+  const actual = await vi.importActual('@mantine/hooks');
+  return {
+    ...actual,
+    useFetch: vi.fn(),
+  };
+});
 
-// describe('AppShellExample Integration', () => {
-//   const mockData = [
-//     { id: '1', name: 'Carrot', price: 10, image: 'carrot.jpg', category: 'veg' },
-//     { id: '2', name: 'Tomato', price: 15, image: 'tomato.jpg', category: 'veg' },
-//   ];
+describe('AppShell Integration', () => {
+  const mockData = [
+    {
+      links: { mission_patch_small: 'https://images2.imgbox.com/4f/d2/kTjuhrb0_o.png' },
+      rocket: { rocket_name: 'Falcon 9' },
+      mission_name: 'Starlink 2',
+    },
+    {
+      links: { mission_patch_small: 'https://images2.imgbox.com/9a/96/nLppz9HW_o.png' },
+      rocket: { rocket_name: 'Falcon 9' },
+      mission_name: 'Starlink-13 (v1.0)',
+    },
+  ];
 
-//   beforeEach(() => {
-//     vi.clearAllMocks();
-//   });
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-//   it('отображает состояние наполнениеи или пустой каталог, пока данных нет', () => {
-//     (useFetch as any).mockReturnValue({ data: null, loading: true, error: null });
+  it('отображает состояние наполнениеи или пустой каталог, пока данных нет', () => {
+    (useFetch as any).mockReturnValue({ data: null, loading: true, error: null });
 
-//     render(<AppShellExample />);
+    render(<AppShell />);
 
-//     expect(screen.getByText('Vegetable')).toBeInTheDocument();
-//     expect(screen.getByText('Catalog')).toBeInTheDocument();
-//   });
+    expect(screen.getByText(/SpaceX Launches 2020/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Starlink 2/i)).toBeNull();
+  });
 
-//   it('рендерит список товаров после успешной наполнениеи данных', async () => {
-//     (useFetch as any).mockReturnValue({ data: mockData, loading: false, error: null });
+  it('рендерит список товаров после успешной наполнениеи данных', async () => {
+    (useFetch as any).mockReturnValue({ data: mockData, loading: false, error: null });
 
-//     render(<AppShellExample />);
+    render(<AppShell />);
 
-//     expect(screen.getByText('SHOP')).toBeInTheDocument();
+    expect(screen.getByText(/SpaceX Launches 2020/i)).toBeInTheDocument();
 
-//     await waitFor(() => {
-//       expect(screen.getByText(/Carrot/i)).toBeInTheDocument();
-//       expect(screen.getByText(/Tomato/i)).toBeInTheDocument();
-//     });
-//   });
-
-//   it('инициализирует корзину с нулевым количеством элементов', () => {
-//     (useFetch as any).mockReturnValue({ data: mockData, loading: false, error: null });
-
-//     render(<AppShellExample />);
-
-//     const cartBadge = screen.getByText('0');
-//     expect(cartBadge).toBeInTheDocument();
-//   });
-// });
+    expect(await screen.findByText(/Starlink 2/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Starlink-13/i)).toBeInTheDocument();
+  });
+});

@@ -1,47 +1,42 @@
-// import { render, screen } from '@test-utils';
-// import { vi } from 'vitest';
-// import { useCounterContext } from '../CounterContext/CounterContext';
-// import GridExample from './Grid';
+import { render, screen } from '@test-utils';
+import { vi } from 'vitest';
+import Grid from './Grid';
 
-// vi.mock('../CounterContext/CounterContext', () => ({
-//   useCounterContext: vi.fn(),
-// }));
+describe('Grid Component', () => {
+  const mockData = [
+    {
+      links: { mission_patch_small: 'https://images2.imgbox.com/4f/d2/kTjuhrb0_o.png' },
+      rocket: { rocket_name: 'Falcon 8' },
+      mission_name: 'Starlink-14 (v1.0)',
+    },
+    {
+      links: { mission_patch_small: 'https://images2.imgbox.com/9a/96/nLppz9HW_o.png' },
+      rocket: { rocket_name: 'Falcon 9' },
+      mission_name: 'Starlink-13 (v1.0)',
+    },
+  ];
 
-// describe('GridExample Component', () => {
-//   const mockData = [
-//     { id: '1', name: 'Apple-Fruit', price: 2, image: 'apple.jpg' },
-//     { id: '2', name: 'Banana-Fruit', price: 1, image: 'banana.jpg' },
-//   ];
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-//   const mockContext = {
-//     counters: {},
-//     increment: vi.fn(),
-//     decrement: vi.fn(),
-//     updateList: vi.fn(),
-//   };
+  it('отображает 24 циклов загрузки, когда данные загружаются (data === null)', () => {
+    render(<Grid data={null} length={0} />);
 
-//   beforeEach(() => {
-//     vi.clearAllMocks();
-//     (useCounterContext as any).mockReturnValue(mockContext);
-//   });
+    const { container } = render(<Grid data={null} length={0} />);
 
-//   it('отображает 24 циклов загрузки, когда данные загружаются (data === null)', () => {
-//     render(<GridExample data={null} length={0} />);
+    const loaders = container.querySelectorAll('.mantine-Loader-root');
 
-//     const { container } = render(<GridExample data={null} length={0} />);
+    expect(loaders.length).toBe(24);
+  });
 
-//     const loaders = container.querySelectorAll('.mantine-Loader-root');
+  it('рендерит правильное количество карточек CardBig при наличии данных', () => {
+    render(<Grid data={mockData} length={mockData.length} />);
 
-//     expect(loaders.length).toBe(24);
-//   });
+    expect(screen.getByText('Falcon 8')).toBeInTheDocument();
+    expect(screen.getByText('Falcon 9')).toBeInTheDocument();
 
-//   it('рендерит правильное количество карточек CardBig при наличии данных', () => {
-//     render(<GridExample data={mockData} length={mockData.length} />);
-
-//     expect(screen.getByText('Apple')).toBeInTheDocument();
-//     expect(screen.getByText('Banana')).toBeInTheDocument();
-
-//     const prices = screen.getAllByText(/^\$ \d+/);
-//     expect(prices).toHaveLength(2);
-//   });
-// });
+    const buttons = screen.getAllByText(/see more/i);
+    expect(buttons).toHaveLength(2);
+  });
+});
