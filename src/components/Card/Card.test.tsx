@@ -16,7 +16,7 @@ describe('Card Component', () => {
   });
 
   afterEach(() => {
-    const modalRoot = document.getElementById('modal');
+    const modalRoot = document.getElementById('modal')!;
     document.body.removeChild(modalRoot);
   });
 
