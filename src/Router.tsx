@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HomePage } from './pages/Home.page';
 
+const isVercel = typeof window !== 'undefined' && window.location.hostname.includes('vercel.app');
+
 const router = createBrowserRouter(
   [
     {
@@ -9,7 +11,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: '/mantine',
+    basename: isVercel ? '/' : '/mantine',
   }
 );
 
