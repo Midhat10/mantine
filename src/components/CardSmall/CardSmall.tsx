@@ -1,7 +1,6 @@
 import React from 'react';
 import { AspectRatio, Box, Card, Group, Image, Stack, Text } from '@mantine/core';
 import Counter from '../Counter/Counter';
-import { useCounterContext } from '../CounterContext/CounterContext';
 
 interface CardSmallProps {
   item: any;
@@ -9,9 +8,6 @@ interface CardSmallProps {
 }
 
 function CardSmall({ item, withDivider = true }: CardSmallProps) {
-  const { counters, increment, decrement } = useCounterContext();
-  const count = counters[item.id] ?? 1;
-
   const [firstName, lastName] = item.name.split('-');
 
   return (
@@ -69,11 +65,7 @@ function CardSmall({ item, withDivider = true }: CardSmallProps) {
           </Stack>
         </Group>
 
-        <Counter
-          value={count}
-          decrement={() => decrement(item.id)}
-          increment={() => increment(item.id)}
-        />
+        <Counter item={item} regim={2} />
       </Group>
 
       <div

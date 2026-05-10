@@ -1,15 +1,13 @@
-import { useCounterContext } from '../CounterContext/CounterContext';
+import { useTypedSelector } from '@/hooks/redux';
 
 const TotalPrice = () => {
-  const { list, counters } = useCounterContext();
+  const todosSmall = useTypedSelector((state) => state.todos.reducerTodo.todoListSmall);
 
-  const total = list.reduce((sum, item) => {
-    const currentQty = counters[item.id] ?? 1;
-
-    return sum + item.price * currentQty;
+  const total = todosSmall.reduce((sum, item) => {
+    return sum + item.price * item.count;
   }, 0);
 
-  return <b>$ {total.toFixed(0)}</b>;
+  return <b>$ {total}</b>;
 };
 
 export default TotalPrice;

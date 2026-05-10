@@ -1,13 +1,15 @@
 import { IconShoppingCart } from '@tabler/icons-react';
 import { AspectRatio, Button, Card, Group, Image, Text } from '@mantine/core';
+import { useTypedDispatch } from '@/hooks/redux';
+import { addCard } from '@/reducers/TodoSlice';
 import Counter from '../Counter/Counter';
-import { useCounterContext } from '../CounterContext/CounterContext';
 
 export interface Item {
   id: string;
   image: string;
   name: string;
   price: number;
+  count: number;
 }
 
 export interface CardBigProps {
@@ -15,8 +17,7 @@ export interface CardBigProps {
 }
 
 function CardBig({ item }: CardBigProps) {
-  const { counters, increment, decrement, updateList } = useCounterContext();
-  const count = counters[item.id] ?? 1;
+  const dispatch = useTypedDispatch();
 
   const [firstName, lastName] = item.name.split('-');
 
@@ -84,11 +85,7 @@ function CardBig({ item }: CardBigProps) {
           )}
         </Group>
 
-        <Counter
-          value={count}
-          decrement={() => decrement(item.id)}
-          increment={() => increment(item.id)}
-        />
+        <Counter item={item} regim={1} />
       </Group>
 
       <Group justify="space-between" align="center" mt="auto">
@@ -98,7 +95,9 @@ function CardBig({ item }: CardBigProps) {
         <Button
           variant="light"
           color="green"
-          onClick={() => updateList(item, count)}
+          onClick={() => {
+            dispatch(addCard({ item, id: item.id }));
+          }}
           radius="md"
           w={{ base: 'auto', md: 170 }}
           h={44}

@@ -1,23 +1,23 @@
 import { Box, Group, Stack, Text } from '@mantine/core';
 import Empty from '@/assets/svg/empty';
+import { useTypedSelector } from '@/hooks/redux';
 import CardSmall from '../CardSmall/CardSmall';
-import { useCounterContext } from '../CounterContext/CounterContext';
 import TotalPrice from '../TotalPrice/TotalPrice';
 
 function GridSmall() {
-  const { list } = useCounterContext();
-
+  // const { list } = useCounterContext();
+  const todosSmall = useTypedSelector((state) => state.todos.reducerTodo.todoListSmall);
   const textStyles = {
     color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-white))',
   };
 
   return (
     <Box maw={444} w="100%">
-      {list && list.length > 0 ? (
+      {todosSmall && todosSmall.length > 0 ? (
         <Stack gap={0}>
           {/* Список товаров */}
-          {list.map((item, index) => (
-            <CardSmall key={item.id} item={item} withDivider={index !== list.length - 1} />
+          {todosSmall.map((item, index) => (
+            <CardSmall key={item.id} item={item} withDivider={index !== todosSmall.length - 1} />
           ))}
 
           <Group justify="space-between" p="0px 24px 24px" style={textStyles}>

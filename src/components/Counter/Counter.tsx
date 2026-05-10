@@ -1,12 +1,23 @@
 import { Button, Group, Text } from '@mantine/core';
+import { useTypedDispatch } from '@/hooks/redux';
+import { decrement, increment } from '@/reducers/TodoSlice';
 
-interface CounterProps {
-  value: number;
-  decrement: () => void;
-  increment: () => void;
+// interface CounterProps {
+//   value: number;
+//   decrement: () => void;
+//   increment: () => void;
+// }
+
+export interface Item {
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+  count: number;
 }
 
-function Counter({ value, decrement, increment }: CounterProps) {
+function Counter({ item, regim }: { item: Item; regim: number }) {
+  const dispatch = useTypedDispatch();
   const btnStyles = {
     backgroundColor: 'light-dark(var(--mantine-color-gray-2), var(--mantine-color-customGray-7))',
     color: 'light-dark(var(--mantine-color-black), var(--mantine-color-white))',
@@ -16,7 +27,7 @@ function Counter({ value, decrement, increment }: CounterProps) {
   return (
     <Group gap={0} wrap="nowrap" align="center">
       <Button
-        onClick={decrement}
+        onClick={() => dispatch(decrement({ id: item.id, regim }))}
         variant="default"
         w={30}
         h={30}
@@ -40,11 +51,11 @@ function Counter({ value, decrement, increment }: CounterProps) {
           userSelect: 'none',
         }}
       >
-        {value}
+        {item.count}
       </Text>
 
       <Button
-        onClick={increment}
+        onClick={() => dispatch(increment({ id: item.id, regim }))}
         variant="default"
         w={30}
         h={30}

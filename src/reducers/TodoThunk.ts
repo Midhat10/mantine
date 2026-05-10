@@ -12,6 +12,7 @@ export const fetchTodos = createAsyncThunk<Todo[], undefined, { rejectValue: str
         throw new Error('Эй, тудушки с данными не прогрузились');
       }
       const data = await response.json();
+      console.log(data, 'data');
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);

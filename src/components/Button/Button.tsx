@@ -1,8 +1,8 @@
 import { Badge, Button as MButton, Popover } from '@mantine/core';
-import { useCounterContext } from '../CounterContext/CounterContext';
+import { useTypedSelector } from '@/hooks/redux';
 
 function Button() {
-  const { list } = useCounterContext();
+  const todosSmall = useTypedSelector((state) => state.todos.reducerTodo.todoListSmall);
   return (
     <Popover.Target>
       <MButton
@@ -11,7 +11,7 @@ function Button() {
         radius="md"
         leftSection={
           <Badge variant="white" color="black" radius="lg" fw="600" fz="14px" p="0px 5px">
-            {list.length}
+            {todosSmall.length}
           </Badge>
         }
         rightSection={
