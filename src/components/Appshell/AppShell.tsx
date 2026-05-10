@@ -1,23 +1,11 @@
 import { Flex, AppShell as MantineAppShell, Button as MButton, Text, Title } from '@mantine/core';
-import { useFetch } from '@mantine/hooks';
 import Button from '../Button/Button';
 import { CounterProvider } from '../CounterContext/CounterContext';
 import Grid from '../Grid/Grid';
 import LightDarkButton from '../LightDarkButton/LightDarkButton';
 import PopOver from '../Popover/PopOver';
 
-interface Item {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
-
 function AppShell() {
-  const { data } = useFetch<Item[]>(
-    'https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json'
-  );
   return (
     <>
       <CounterProvider>
@@ -53,7 +41,7 @@ function AppShell() {
             >
               Catalog
             </Title>
-            <Grid data={data} length={0} />
+            <Grid />
           </MantineAppShell.Main>
         </MantineAppShell>
       </CounterProvider>
