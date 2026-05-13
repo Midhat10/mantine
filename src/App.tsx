@@ -2,19 +2,19 @@ import '@mantine/core/styles.css';
 
 import { useEffect } from 'react';
 import { MantineProvider } from '@mantine/core';
+import AppShell from './components/Appshell/AppShell';
 import { useTypedDispatch } from './hooks/redux';
-import { fetchTodos } from './reducers/TodoThunk';
-import { Router } from './Router';
+import { fetchProducts } from './reducers/ProductThunk';
 import theme from './theme';
 
 export default function App() {
   const dispatch = useTypedDispatch();
   useEffect(() => {
-    dispatch(fetchTodos());
+    dispatch(fetchProducts());
   }, [dispatch]);
   return (
     <MantineProvider theme={theme}>
-      <Router />
+      <AppShell />
     </MantineProvider>
   );
 }

@@ -1,18 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Todo } from './TodoSlice';
+import { Product } from './ProductSlice';
 
-export const fetchTodos = createAsyncThunk<Todo[], undefined, { rejectValue: string }>(
-  'todos/fetchTodos',
+export const fetchProducts = createAsyncThunk<Product[], undefined, { rejectValue: string }>(
+  'products/fetchProducts',
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
         'https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json'
       );
       if (!response.ok) {
-        throw new Error('Эй, тудушки с данными не прогрузились');
+        throw new Error('Эй, данные продукты не прогрузились');
       }
       const data = await response.json();
-      console.log(data, 'data');
       return data;
     } catch (error: any) {
       return rejectWithValue(error.message);

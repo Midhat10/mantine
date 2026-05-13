@@ -1,7 +1,7 @@
 import { IconShoppingCart } from '@tabler/icons-react';
 import { AspectRatio, Button, Card, Group, Image, Text } from '@mantine/core';
 import { useTypedDispatch } from '@/hooks/redux';
-import { addCard } from '@/reducers/TodoSlice';
+import { addCard } from '@/reducers/ProductSlice';
 import Counter from '../Counter/Counter';
 
 export interface Item {

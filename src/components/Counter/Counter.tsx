@@ -1,12 +1,6 @@
 import { Button, Group, Text } from '@mantine/core';
 import { useTypedDispatch } from '@/hooks/redux';
-import { decrement, increment } from '@/reducers/TodoSlice';
-
-// interface CounterProps {
-//   value: number;
-//   decrement: () => void;
-//   increment: () => void;
-// }
+import { decrement, increment } from '@/reducers/ProductSlice';
 
 export interface Item {
   id: string;

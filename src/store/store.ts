@@ -1,13 +1,9 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import reducerTodo from '../reducers/TodoSlice';
-
-const rootReducer = combineReducers({
-  reducerTodo,
-});
+import { configureStore } from '@reduxjs/toolkit';
+import ProductReducer from '../reducers/ProductSlice';
 
 const store = configureStore({
   reducer: {
-    todos: rootReducer,
+    products: ProductReducer,
   },
 });
 

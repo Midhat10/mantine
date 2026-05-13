@@ -1,7 +1,7 @@
 import { useTypedSelector } from '@/hooks/redux';
 
 const TotalPrice = () => {
-  const todosSmall = useTypedSelector((state) => state.todos.reducerTodo.todoListSmall);
+  const todosSmall = useTypedSelector((state) => state.products.productListSmall);
 
   const total = todosSmall.reduce((sum, item) => {
     return sum + item.price * item.count;

@@ -6,7 +6,7 @@ import TotalPrice from '../TotalPrice/TotalPrice';
 
 function GridSmall() {
   // const { list } = useCounterContext();
-  const todosSmall = useTypedSelector((state) => state.todos.reducerTodo.todoListSmall);
+  const todosSmall = useTypedSelector((state) => state.products.productListSmall);
   const textStyles = {
     color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-white))',
   };

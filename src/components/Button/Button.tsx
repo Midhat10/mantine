@@ -2,7 +2,7 @@ import { Badge, Button as MButton, Popover } from '@mantine/core';
 import { useTypedSelector } from '@/hooks/redux';
 
 function Button() {
-  const todosSmall = useTypedSelector((state) => state.todos.reducerTodo.todoListSmall);
+  const todosSmall = useTypedSelector((state) => state.products.productListSmall);
   return (
     <Popover.Target>
       <MButton

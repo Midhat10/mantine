@@ -15,7 +15,7 @@ export interface GridProps {
 
 function Grid() {
   const listEmpty = new Array(24).fill('');
-  const { todoList, error, status } = useTypedSelector((state) => state.todos.reducerTodo);
+  const { productList, error, status } = useTypedSelector((state) => state.products);
   return (
     <MGrid gutter="md" mt="lg">
       {status === 'loading' &&
@@ -30,7 +30,7 @@ function Grid() {
         ))}
 
       {status === 'resolved' &&
-        todoList.map((item) => (
+        productList.map((item) => (
           <MGrid.Col key={item.id} span={{ base: 12, xs: 6, sm: 4, md: 3 }}>
             <CardBig item={item} />
           </MGrid.Col>
