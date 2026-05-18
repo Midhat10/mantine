@@ -2,15 +2,7 @@ import { Button, Group, Text } from '@mantine/core';
 import { useTypedDispatch } from '@/hooks/redux';
 import { decrement, increment } from '@/reducers/ProductSlice';
 
-export interface Item {
-  id: string;
-  image: string;
-  name: string;
-  price: number;
-  count: number;
-}
-
-function Counter({ item, regim }: { item: Item; regim: number }) {
+function Counter({ item, regim }: { item: Product; regim: number }) {
   const dispatch = useTypedDispatch();
   const btnStyles = {
     backgroundColor: 'light-dark(var(--mantine-color-gray-2), var(--mantine-color-customGray-7))',

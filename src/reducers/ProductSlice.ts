@@ -1,15 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchProducts } from './ProductThunk';
 
-export type Product = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-  count: number;
-};
-
 type ProductState = {
   productList: Product[];
   productListSmall: Product[];
@@ -17,7 +8,7 @@ type ProductState = {
   error: string | null | undefined;
 };
 
-const initialState: ProductState = {
+export const initialState: ProductState = {
   productList: [],
   productListSmall: [],
   status: '',
@@ -31,19 +22,21 @@ const ProductSlice = createSlice({
     increment(state, action) {
       if (action.payload.regim === 1) {
         const product = state.productList.find((product) => product.id === action.payload.id)!;
-        product.count++;
+        if (product) {
+          product.count = (product.count ?? 0) + 1;
+        }
       } else if (action.payload.regim === 2) {
-        const product = state.productListSmall.find((product) => product.id === action.payload.id)!;
-        product.count++;
+        const product = state.productListSmall.find((product) => product.id === action.payload.id);
+        if (product) {
+          product.count = (product.count ?? 0) + 1;
+        }
       }
     },
     decrement(state, action) {
       if (action.payload.regim === 1) {
         const product = state.productList.find((product) => product.id === action.payload.id)!;
         if (product.count > 1) {
-          if (product.count > 1) {
-            product.count--;
-          }
+          product.count--;
         }
       } else if (action.payload.regim === 2) {
         const product = state.productListSmall.find((product) => product.id === action.payload.id)!;
@@ -62,12 +55,15 @@ const ProductSlice = createSlice({
         (product) => product.id === action.payload.id
       );
       if (productSmall) {
-        productSmall.count += action.payload.item.count;
+        productSmall.count += action.payload.count;
       } else {
-        state.productListSmall.push(action.payload.item);
+        state.productListSmall.push(action.payload);
       }
       const product = state.productList.find((product) => product.id === action.payload.id)!;
       product.count = 1;
+    },
+    fetchProductsByHand(state, action) {
+      state.productList = action.payload.map((product: Product) => ({ ...product, count: 1 }));
     },
   },
   extraReducers(builder) {
@@ -78,8 +74,7 @@ const ProductSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'resolved';
-        state.productList = action.payload;
-        state.productList = state.productList.map((product) => ({ ...product, count: 1 }));
+        state.productList = action.payload.map((product) => ({ ...product, count: 1 }));
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.error = action.payload;
@@ -88,5 +83,5 @@ const ProductSlice = createSlice({
   },
 });
 
-export const { increment, decrement, addCard } = ProductSlice.actions;
+export const { increment, decrement, addCard, fetchProductsByHand } = ProductSlice.actions;
 export default ProductSlice.reducer;

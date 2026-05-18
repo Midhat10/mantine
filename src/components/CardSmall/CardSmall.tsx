@@ -3,7 +3,7 @@ import { AspectRatio, Box, Card, Group, Image, Stack, Text } from '@mantine/core
 import Counter from '../Counter/Counter';
 
 interface CardSmallProps {
-  item: any;
+  item: Product;
   withDivider?: boolean;
 }
 

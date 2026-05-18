@@ -1,11 +1,14 @@
 import { Badge, Button as MButton, Popover } from '@mantine/core';
 import { useTypedSelector } from '@/hooks/redux';
 
-function Button() {
+interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {}
+
+function Button({ ...props }: ButtonProps) {
   const todosSmall = useTypedSelector((state) => state.products.productListSmall);
   return (
     <Popover.Target>
       <MButton
+        {...props}
         color="#54b46a"
         ml="auto"
         radius="md"

@@ -5,14 +5,13 @@ import CardSmall from '../CardSmall/CardSmall';
 import TotalPrice from '../TotalPrice/TotalPrice';
 
 function GridSmall() {
-  // const { list } = useCounterContext();
   const todosSmall = useTypedSelector((state) => state.products.productListSmall);
   const textStyles = {
     color: 'light-dark(var(--mantine-color-customGray-9), var(--mantine-color-white))',
   };
 
   return (
-    <Box maw={444} w="100%">
+    <Box maw={444} w="100%" data-testid="target-grid">
       {todosSmall && todosSmall.length > 0 ? (
         <Stack gap={0}>
           {/* Список товаров */}

@@ -4,16 +4,8 @@ import { useTypedDispatch } from '@/hooks/redux';
 import { addCard } from '@/reducers/ProductSlice';
 import Counter from '../Counter/Counter';
 
-export interface Item {
-  id: string;
-  image: string;
-  name: string;
-  price: number;
-  count: number;
-}
-
 export interface CardBigProps {
-  item: Item;
+  item: Product;
 }
 
 function CardBig({ item }: CardBigProps) {
@@ -96,7 +88,7 @@ function CardBig({ item }: CardBigProps) {
           variant="light"
           color="green"
           onClick={() => {
-            dispatch(addCard({ item, id: item.id }));
+            dispatch(addCard(item));
           }}
           radius="md"
           w={{ base: 'auto', md: 170 }}

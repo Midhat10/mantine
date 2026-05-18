@@ -7,7 +7,11 @@ const TotalPrice = () => {
     return sum + item.price * item.count;
   }, 0);
 
-  return <b>$ {total}</b>;
+  return (
+    <span>
+      <b>$ {total}</b>
+    </span>
+  );
 };
 
 export default TotalPrice;

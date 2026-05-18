@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Product } from './ProductSlice';
 
 export const fetchProducts = createAsyncThunk<Product[], undefined, { rejectValue: string }>(
   'products/fetchProducts',
